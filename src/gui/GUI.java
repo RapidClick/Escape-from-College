@@ -10,7 +10,6 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 
 import escapeFromCollege.GameMap;
-import escapeFromCollege.HealthBar;
 
 import java.util.*;
 
