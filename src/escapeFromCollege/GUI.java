@@ -5,8 +5,10 @@ import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.awt.print.PrinterException;
 import java.io.*;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
+
 import java.util.*;
 
 public class GUI {
@@ -83,7 +85,6 @@ private int location = 1;
 		scrollText.setText("This is a framework for a basic text adventure");
 		scrollText.setText(scrollText.getText() + "\n" + map.getNodeAt(1).getEvent());
 		scrollText.append("\n" + map.getNodeAt(1).getOptions());
-		
 		JTextArea writeText = new JTextArea();
 		writeText.setLineWrap(true);
 		JScrollPane lowerScrollPane = new JScrollPane(writeText);
@@ -427,6 +428,8 @@ private int location = 1;
 						for (int i = health.getHealth(); i < health.getMaxHealth(); i++) {
 							health.setColor(0, i, Color.WHITE);
 						}
+						writeText.setText("");
+						writeText.setBackground(Color.WHITE);
 						frame.setMinimumSize(new Dimension(925, 600));
 						frame.pack();
 						frame.repaint();
