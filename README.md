@@ -34,17 +34,17 @@ Nursing
 
 
 Gen Ed Classes:
-History
-	Go back in time and fight a battle in history
-	Potential Battles: 
-	-Go back in time and kill Hitler
-	-
+History   ***Depending on how complicated it is to create a history level, we may utilize a few options for variety in gameplay***
+	The professor that you meet with begins a history lesson by telling a story. The year is 1429 in Orleans, France who has been involved in the hundred years war against the English. 
+	The English appeared to be winning, but a young Joan of Arc who is controlled by our student, has a spiritual vision leading into the city, rallying the citizens, and fighting against 
+	the english with tactical decisions. Joan of Arc and the French retook the banks of the Loire River and defeated the invaders, saving the French from centuries of English rule.
+	
 Chemistry
 	Student goes to a room where a chemistry experiment has gone wrong. Fellow classmates have become sick and start to attack the student. The professor who is in hiding
 	tells the student must battle their way through a series of lab rooms, collecting different chemicals from fallen classmates. A treaure hunt for a certain set of 
 	chemicals creates a cure for the classmates illness.
 Ecology
-	As an ecology student, the player must acquire certain seeds to plant, plant them in the campus greenhouse, and water them. 
+	As an ecology student, the player must acquire certain seeds to plant, plant them in the campus greenhouse, and water them. (What happens next?)
 
 	
 	
