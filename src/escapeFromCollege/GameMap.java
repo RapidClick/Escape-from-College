@@ -166,7 +166,7 @@ public class GameMap {
 		
 	}*/
 	
-	private void goRoom(String direction){
+	public void goRoom(String direction){
 		
 		//will replace with command parsing eventually
 		

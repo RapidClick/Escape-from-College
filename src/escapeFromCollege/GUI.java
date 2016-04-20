@@ -11,18 +11,23 @@ import java.util.*;
 
 public class GUI {
 	
-private int location = 1;
+	private int location = 1;
+	private JFrame frame;
+	private JFrame chooseFrame;
+	private HealthBar health;
+	private JTextArea scrollText;
+	private JTextArea writeText;
 	
 	public GUI(File saveFile, GameMap map) {
 		
 		Dimension defaultDim = new Dimension(925, 600);
 		
-		JFrame frame = new JFrame("Basic Application");
+		frame = new JFrame("Basic Application");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setMinimumSize(defaultDim);
 		frame.setLayout(new GridBagLayout());
 		
-		JFrame chooseFrame = new JFrame("Basic Application");
+		chooseFrame = new JFrame("Basic Application");
 		chooseFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		chooseFrame.setMinimumSize(defaultDim);
 		chooseFrame.setLayout(new GridBagLayout());
@@ -65,7 +70,7 @@ private int location = 1;
 		healthTitle.setEditable(false);
 		healthTitle.setText("Health");
 		
-		HealthBar health = new HealthBar(1);
+		health = new HealthBar(1);
 		for (int i = 0; i < health.getMaxHealth(); i++) {
 			health.setColor(0, i, Color.PINK);
 		}
@@ -74,15 +79,13 @@ private int location = 1;
 		JPanel textAreaPanel = new JPanel();
 		textAreaPanel.setLayout(new GridBagLayout());
 		//**********************************************************
-		JTextArea scrollText = new JTextArea();
+		scrollText = new JTextArea();
 		scrollText.setLineWrap(true);
 		JScrollPane upperScrollPane = new JScrollPane(scrollText);
 		upperScrollPane.setPreferredSize(new Dimension(500, 200));
 		scrollText.setWrapStyleWord(true);
 		scrollText.setEditable(false);
-		scrollText.setText("This is a framework for a basic text adventure");
-		scrollText.setText(scrollText.getText() + map.printWelcome());
-		JTextArea writeText = new JTextArea();
+		writeText = new JTextArea();
 		writeText.setLineWrap(true);
 		JScrollPane lowerScrollPane = new JScrollPane(writeText);
 		lowerScrollPane.setPreferredSize(new Dimension(500, 100));
@@ -258,23 +261,7 @@ private int location = 1;
 		openOption.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				try {
-					Scanner read = new Scanner(saveFile);
-					health.setHealth(read.nextInt());
-					int location = read.nextInt();
-					read.close();
-					scrollText.setText(map.getNodeAt(location).getEvent());
-					scrollText.append("\n" + map.getNodeAt(location).getOptions());
-					for (int i = 0; i < health.getHealth(); i++) {
-						health.setColor(0, i, Color.PINK);
-					}
-					for (int i = health.getHealth(); i < health.getMaxHealth(); i++) {
-						health.setColor(0, i, Color.WHITE);
-					}
-				} catch (FileNotFoundException e1) {
-					//TODO auto Generated blah blah
-					e1.printStackTrace();
-				}
+				loadGame(saveFile);
 			}
 		});
 		
@@ -313,8 +300,8 @@ private int location = 1;
 						String toAdd = writeText.getText();
 						scrollText.append("\n\n > " + toAdd);
 						int choice = Integer.parseInt(toAdd);
-						scrollText.append("\n\n" + map.getNodeAt(choice).getEvent());
-						scrollText.append("\n" + map.getNodeAt(choice).getOptions());
+						//scrollText.append("\n\n" + map.getNodeAt(choice).getEvent());
+						//scrollText.append("\n" + map.getNodeAt(choice).getOptions());
 						location = choice;
 					}
 		        }
@@ -343,8 +330,8 @@ private int location = 1;
 				scrollText.append("\n\n > " + toAdd);
 				writeText.setText("");
 				int choice = Integer.parseInt(toAdd);
-				scrollText.append("\n\n" + map.getNodeAt(choice).getEvent());
-				scrollText.append("\n" + map.getNodeAt(choice).getOptions());
+				//scrollText.append("\n\n" + map.getNodeAt(choice).getEvent());
+				//scrollText.append("\n" + map.getNodeAt(choice).getOptions());
 				location = choice;
 			}
 		});
@@ -411,37 +398,7 @@ private int location = 1;
 		continueButton.addActionListener(new ActionListener() {
 			@Override 
 			public void actionPerformed(ActionEvent e) {
-				try {
-					Scanner read = new Scanner(saveFile);
-					try {
-						health.setHealth(read.nextInt());
-						int location = read.nextInt();
-						read.close();
-						scrollText.setText(map.getNodeAt(location).getEvent());
-						scrollText.append("\n" + map.getNodeAt(location).getOptions());
-						for (int i = 0; i < health.getHealth(); i++) {
-							health.setColor(0, i, Color.PINK);
-						}
-						for (int i = health.getHealth(); i < health.getMaxHealth(); i++) {
-							health.setColor(0, i, Color.WHITE);
-						}
-						writeText.setText("");
-						writeText.setBackground(Color.WHITE);
-						frame.setMinimumSize(new Dimension(925, 600));
-						frame.pack();
-						frame.repaint();
-						frame.setVisible(true);
-						chooseFrame.dispose();
-					} catch (NoSuchElementException E) {
-						scrollText.setText("No saved game. Starting new game:\n\n" + scrollText.getText());
-						frame.setMinimumSize(new Dimension(925, 600));
-						frame.pack();
-						frame.setVisible(true);
-						chooseFrame.dispose();
-					}
-				} catch (FileNotFoundException e1) {
-					e1.printStackTrace();
-				}
+				loadGame(saveFile);
 			}
 		});
 		
@@ -454,8 +411,7 @@ private int location = 1;
 				}
 				location = 1;
 				scrollText.setText("This is a framework for a basic text adventure");
-				scrollText.setText(scrollText.getText() + "\n" + map.getNodeAt(location).getEvent());
-				scrollText.append("\n" + map.getNodeAt(location).getOptions());
+				scrollText.setText(scrollText.getText() + map.printWelcome());
 				writeText.setText("");
 				writeText.setBackground(Color.WHITE);
 				frame.setMinimumSize(new Dimension(925, 600));
@@ -495,6 +451,39 @@ private int location = 1;
 		
 		
 		chooseFrame.setVisible(true);
+	}
+	
+	public void loadGame(File saveFile) {
+		try {
+			Scanner read = new Scanner(saveFile);
+			try {
+				health.setHealth(read.nextInt());
+				read.close();
+				for (int i = 0; i < health.getHealth(); i++) {
+					health.setColor(0, i, Color.PINK);
+				}
+				for (int i = health.getHealth(); i < health.getMaxHealth(); i++) {
+					health.setColor(0, i, Color.WHITE);
+				}
+				writeText.setText("");
+				writeText.setBackground(Color.WHITE);
+				writeText.setForeground(Color.BLACK);
+				scrollText.setText("");
+				frame.setMinimumSize(new Dimension(925, 600));
+				frame.pack();
+				frame.repaint();
+				frame.setVisible(true);
+				chooseFrame.dispose();
+			} catch (NoSuchElementException E) {
+				scrollText.setText("No saved game. Starting new game:\n\n" + scrollText.getText());
+				frame.setMinimumSize(new Dimension(925, 600));
+				frame.pack();
+				frame.setVisible(true);
+				chooseFrame.dispose();
+			}
+		} catch (FileNotFoundException e1) {
+			e1.printStackTrace();
+		}
 	}
 
 }
