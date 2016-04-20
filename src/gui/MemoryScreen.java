@@ -14,7 +14,7 @@ public class MemoryScreen extends JPanel {
 		setPreferredSize(getSize());
 		setMinimumSize(getSize());
 		setMaximumSize(getSize());
-		setBackground(Color.BLUE);
+		setBackground(Color.GRAY);
 		setEnabled(false);
 		setLayout(new GridBagLayout());
 	}
