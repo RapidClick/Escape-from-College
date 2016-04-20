@@ -5,10 +5,8 @@ import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.awt.print.PrinterException;
 import java.io.*;
-
 import javax.imageio.ImageIO;
 import javax.swing.*;
-
 import java.util.*;
 
 public class GUI {
@@ -83,8 +81,7 @@ private int location = 1;
 		scrollText.setWrapStyleWord(true);
 		scrollText.setEditable(false);
 		scrollText.setText("This is a framework for a basic text adventure");
-		scrollText.setText(scrollText.getText() + "\n" + map.getNodeAt(1).getEvent());
-		scrollText.append("\n" + map.getNodeAt(1).getOptions());
+		scrollText.setText(scrollText.getText() + map.printWelcome());
 		JTextArea writeText = new JTextArea();
 		writeText.setLineWrap(true);
 		JScrollPane lowerScrollPane = new JScrollPane(writeText);

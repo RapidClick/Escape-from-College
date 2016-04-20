@@ -154,12 +154,11 @@ public class GameMap {
 	}
 	
 	
-	private void printWelcome() {
-		System.out.println("Welcome to HELL!!!!!!!!!!");
-		System.out.println("Just kidding! Welcome to College!");
-		System.out.println("just type where you want to go to get around!");
-		System.out.println("To exit the game type 'quit'");
-		System.out.println(currentRoom.getLongDescription());
+	public String printWelcome() {
+		String welcome = "Welcome to HELL!!!!!!!!!!\nJust kidding! Welcome to College!\n"
+				+ "just type where you want to go to get around!\nTo exit the game type 'quit'"
+				+ currentRoom.getLongDescription();
+		return welcome;
 	}
 	
 	/*private void getCommands(){
