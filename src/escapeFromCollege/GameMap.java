@@ -1,6 +1,7 @@
 package escapeFromCollege;
 /**
  * This is a class to test the creation of a game map using HashMap
+ * @author Matthew
  */
 import java.util.Scanner;
 
