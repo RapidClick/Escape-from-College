@@ -21,6 +21,7 @@ public class GUI {
 	private static HealthBar health;
 	private static JTextArea scrollText;
 	private static JTextArea writeText;
+	private static JPanel backGround = new JPanel();
 	
 	public GUI(File saveFile, GameMap map) {
 		
@@ -361,6 +362,8 @@ public class GUI {
 							JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null) 
 							== JOptionPane.YES_OPTION) {
 						frame.dispose();
+						chooseFrame.remove(loadSlots);
+						//chooseFrame.remove(backgroundPanel);
 						chooseFrame.setVisible(true);
 					} else {
 						frame.dispose();
@@ -488,7 +491,7 @@ public class GUI {
 				frame.pack();
 				frame.repaint();
 				frame.setVisible(true);
-				chooseFrame.dispose();
+				chooseFrame.setVisible(false);
 			} catch (NoSuchElementException E) {
 				scrollText.setText("No saved game. Starting new game:\n\n" + scrollText.getText());
 				frame.setMinimumSize(new Dimension(925, 600));
@@ -502,7 +505,7 @@ public class GUI {
 	}
 	
 	public void addMemPanel(MemoryScreen memPanel, JFrame backFrame) {
-		JPanel backGround = new JPanel();
+		backGround = new JPanel();
 		GridBagConstraints backGroundC = new GridBagConstraints();
 		GridBagConstraints memPanelC = new GridBagConstraints();
 		backGround.setSize(backFrame.getSize());

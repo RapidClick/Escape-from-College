@@ -6,6 +6,7 @@ import java.awt.GridBagLayout;
 
 import javax.swing.JPanel;
 
+@SuppressWarnings("serial")
 public class MemoryScreen extends JPanel {
 	
 	public MemoryScreen(String title) {
