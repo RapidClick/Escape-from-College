@@ -1,4 +1,6 @@
 package escapeFromCollege;
+import gui.GUI;
+
 import java.io.File;
 
 public class TestDriverGMap {

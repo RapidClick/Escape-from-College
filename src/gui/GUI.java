@@ -1,12 +1,17 @@
-package escapeFromCollege;
+package gui;
 
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.awt.print.PrinterException;
 import java.io.*;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
+
+import escapeFromCollege.GameMap;
+import escapeFromCollege.HealthBar;
+
 import java.util.*;
 
 public class GUI {
