@@ -16,11 +16,11 @@ import java.util.*;
 public class GUI {
 	
 	private int location = 1;
-	private JFrame frame;
-	private JFrame chooseFrame;
-	private HealthBar health;
-	private JTextArea scrollText;
-	private JTextArea writeText;
+	private static JFrame frame;
+	private static JFrame chooseFrame;
+	private static HealthBar health;
+	private static JTextArea scrollText;
+	private static JTextArea writeText;
 	
 	public GUI(File saveFile, GameMap map) {
 		
@@ -31,7 +31,7 @@ public class GUI {
 		frame.setMinimumSize(defaultDim);
 		frame.setLayout(new GridBagLayout());
 		
-		chooseFrame = new JFrame("Basic Application");
+		chooseFrame = new JFrame("Main Menu");
 		chooseFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		chooseFrame.setMinimumSize(defaultDim);
 		chooseFrame.setLayout(new GridBagLayout());
@@ -103,8 +103,9 @@ public class GUI {
 		JPanel enterPanel = new JPanel();
 		enterPanel.setLayout(new GridBagLayout());
 		
-		
-		
+		MemoryScreen saveSlots = new MemoryScreen("Save");
+		MemoryScreen loadSlots = new MemoryScreen("Load");
+		MemoryScreen deleteSlots = new MemoryScreen("Delete");
 		
 		
 		JButton hello = new JButton("Hello");
@@ -114,6 +115,7 @@ public class GUI {
 		JButton enterButton = new JButton("Enter");
 		
 		JButton continueButton = new JButton("Continue");
+		JButton loadButton = new JButton("Load");
 		JButton newGameButton = new JButton("New Game");
 		JButton deleteButton = new JButton("Delete");
 		JButton quitButton = new JButton("Quit");
@@ -224,10 +226,12 @@ public class GUI {
 		chooseC.gridy = 0;
 		chooseFrame.add(continueButton, chooseC);
 		chooseC.gridy = 1;
-		chooseFrame.add(newGameButton, chooseC);
+		chooseFrame.add(loadButton, chooseC);
 		chooseC.gridy = 2;
-		chooseFrame.add(deleteButton, chooseC);
+		chooseFrame.add(newGameButton, chooseC);
 		chooseC.gridy = 3;
+		chooseFrame.add(deleteButton, chooseC);
+		chooseC.gridy = 4;
 		chooseFrame.add(quitButton, chooseC);
 		
 		try {
@@ -406,6 +410,13 @@ public class GUI {
 			}
 		});
 		
+		loadButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				addMemPanel(loadSlots, chooseFrame);
+			}
+		});
+		
 		newGameButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -457,7 +468,7 @@ public class GUI {
 		chooseFrame.setVisible(true);
 	}
 	
-	public void loadGame(File saveFile) {
+	public static void loadGame(File saveFile) {
 		try {
 			Scanner read = new Scanner(saveFile);
 			try {
@@ -488,6 +499,31 @@ public class GUI {
 		} catch (FileNotFoundException e1) {
 			e1.printStackTrace();
 		}
+	}
+	
+	public void addMemPanel(MemoryScreen memPanel, JFrame backFrame) {
+		JPanel backGround = new JPanel();
+		GridBagConstraints backGroundC = new GridBagConstraints();
+		GridBagConstraints memPanelC = new GridBagConstraints();
+		backGround.setSize(backFrame.getSize());
+		backGroundC.anchor = GridBagConstraints.CENTER;
+		backGroundC.fill = GridBagConstraints.BOTH;
+		backGroundC.weighty = 1;
+		backGroundC.weightx = 1;
+		backFrame.add(backGround, backGroundC);
+		memPanelC.gridy = 0;
+		File slot1 = new File("Save1");
+		File slot2 = new File("Save2");
+		File slot3 = new File("Save3");
+		memPanel.add(new MemorySlotButton("Slot 1", slot1), memPanelC);
+		memPanelC.gridy = 2;
+		memPanel.add(new MemorySlotButton("Slot 2", slot2), memPanelC);
+		memPanelC.gridy = 4;
+		memPanel.add(new MemorySlotButton("Slot 3", slot3), memPanelC);
+		memPanelC.anchor = GridBagConstraints.CENTER;
+		memPanelC.fill = GridBagConstraints.BOTH;
+		backGround.add(memPanel, memPanelC);
+		backFrame.setContentPane(backGround);
 	}
 
 }
