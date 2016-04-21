@@ -14,6 +14,7 @@ public class StatBox extends JPanel {
 	
 	private StatBar bar;
 	private JTextField titleField;
+	private int full;
 	
 	public StatBox(String title, Color boxColorIn, Color barColorIn) {
 		setSize(300,45); //y =38
@@ -37,6 +38,8 @@ public class StatBox extends JPanel {
 		
 		bar = new StatBar(barColorIn);
 		bar.setBackground(boxColorIn);
+		
+		full = bar.getFullLenght();
 		
 		GridBagConstraints c = new GridBagConstraints();
 		c.weightx = 1;
@@ -81,4 +84,7 @@ public class StatBox extends JPanel {
 		bar.setStatLvl(newLvl);
 	}
 	
+	public void setFull() {
+		bar.setStatLvl(full);
+	}
 }

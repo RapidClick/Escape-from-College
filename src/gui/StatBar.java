@@ -7,7 +7,7 @@ import javax.swing.*;
 public class StatBar extends JPanel {
 	
 	private static final long serialVersionUID = 0L;
-	private static int fullLength = 10; //10 by default
+	private int fullLength = 10; //10 by default
 	private int currentStatLvl;							//to make slivers smaller - multiply setHealth by some
 	private static final int MARGIN = 0;				//num and divide SquareSize in width by the same
 	private static final int SQUARE_SIZE = 18;  // pixel size of each square

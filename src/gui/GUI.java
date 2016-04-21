@@ -21,10 +21,9 @@ public class GUI {
 	private static JTextArea scrollText;
 	private static JTextArea writeText;
 	private static JPanel backGround = new JPanel();
+	private static StatBox health = new StatBox("Health", Color.LIGHT_GRAY, Color.PINK);
 	
 	public GUI(File saveFile, GameMap map) {
-		
-		StatBox health = new StatBox("Health", Color.LIGHT_GRAY, Color.PINK);
 		
 		Dimension defaultDim = new Dimension(925, 600);
 		
@@ -140,7 +139,7 @@ public class GUI {
 		healthPanelC.fill = GridBagConstraints.HORIZONTAL;
 		//healthPanel.setPreferredSize(new Dimension(1, 38));
 		//healthPanel.setBackground(Color.LIGHT_GRAY);
-		statPanel.add(health, healthPanelC);
+		//StatBox health = new StatBox("Health", Color.LIGHT_GRAY, Color.pink);
 		
 		////////////////////////////////////////////////////////////////////
 		textPanelC.gridx = 1;
@@ -351,7 +350,7 @@ public class GUI {
 		restore.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				int max = 
+				health.setFull();
 			}
 		});
 		
@@ -394,11 +393,8 @@ public class GUI {
 		newGameButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				health.setHealth(health.getMaxHealth());
-				for (int i = 0; i < health.getMaxHealth(); i ++) {
-					health.setColor(0, i, Color.PINK);
-				}
 				location = 1;
+				statPanel.add(health);
 				scrollText.setText("This is a framework for a basic text adventure");
 				scrollText.setText(scrollText.getText() + map.printWelcome());
 				writeText.setText("");
@@ -446,14 +442,8 @@ public class GUI {
 		try {
 			Scanner read = new Scanner(saveFile);
 			try {
-				health.setHealth(read.nextInt());
+				health.setCurrentStatLvl(read.nextInt());
 				read.close();
-				for (int i = 0; i < health.getHealth(); i++) {
-					health.setColor(0, i, Color.PINK);
-				}
-				for (int i = health.getHealth(); i < health.getMaxHealth(); i++) {
-					health.setColor(0, i, Color.WHITE);
-				}
 				writeText.setText("");
 				writeText.setBackground(Color.WHITE);
 				writeText.setForeground(Color.BLACK);
