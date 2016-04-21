@@ -1,12 +1,11 @@
 package gui;
 
-import java.awt.Dimension;
 import java.awt.Color;
+import java.awt.GraphicsDevice;
 import java.awt.GridBagLayout;
-
+import java.awt.GraphicsDevice.WindowTranslucency.*;
 import javax.swing.JPanel;
 
-@SuppressWarnings("serial")
 public class MemoryScreen extends JPanel {
 	
 	public MemoryScreen(String title) {
@@ -16,6 +15,11 @@ public class MemoryScreen extends JPanel {
 		setMinimumSize(getSize());
 		setMaximumSize(getSize());
 		setBackground(Color.GRAY);
+		try {
+			
+		} catch (UnsupportedOperationException e) {
+			
+		}
 		setEnabled(false);
 		setLayout(new GridBagLayout());
 	}

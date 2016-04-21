@@ -18,12 +18,13 @@ public class GUI {
 	private int location = 1;
 	private static JFrame frame;
 	private static JFrame chooseFrame;
-	private static HealthBar health;
 	private static JTextArea scrollText;
 	private static JTextArea writeText;
 	private static JPanel backGround = new JPanel();
 	
 	public GUI(File saveFile, GameMap map) {
+		
+		StatBox health = new StatBox("Health", Color.LIGHT_GRAY, Color.PINK);
 		
 		Dimension defaultDim = new Dimension(925, 600);
 		
@@ -66,19 +67,6 @@ public class GUI {
 		////////////////////////////////////////////////////////////
 		JPanel statPanel = new JPanel();
 		statPanel.setLayout(new GridBagLayout());
-		//**********************************************************
-		JPanel healthPanel = new JPanel();
-		healthPanel.setLayout(new GridBagLayout());
-		
-		JTextField healthTitle = new JTextField();
-		healthTitle.setBackground(Color.LIGHT_GRAY);
-		healthTitle.setEditable(false);
-		healthTitle.setText("Health");
-		
-		health = new HealthBar(1);
-		for (int i = 0; i < health.getMaxHealth(); i++) {
-			health.setColor(0, i, Color.PINK);
-		}
 		
 		////////////////////////////////////////////////////////////
 		JPanel textAreaPanel = new JPanel();
@@ -150,20 +138,9 @@ public class GUI {
 		healthPanelC.weighty = 1; //weighty = 1 should be applied to last stat bar
 		healthPanelC.anchor = GridBagConstraints.NORTH;
 		healthPanelC.fill = GridBagConstraints.HORIZONTAL;
-		healthPanel.setPreferredSize(new Dimension(1, 38));
-		healthPanel.setBackground(Color.LIGHT_GRAY);
-		statPanel.add(healthPanel, healthPanelC);
-		
-		iHealthPanelC.weightx = 0;
-		iHealthPanelC.weightx = 1;
-		healthPanel.add(healthTitle, iHealthPanelC);
-		
-		iHealthPanelC.gridx = 1;
-		health.setBackground(Color.LIGHT_GRAY);
-		for (int i = 0; i < health.getMaxHealth(); i++) {
-			health.setColor(0, i, Color.PINK);
-		}
-		healthPanel.add(health, iHealthPanelC);
+		//healthPanel.setPreferredSize(new Dimension(1, 38));
+		//healthPanel.setBackground(Color.LIGHT_GRAY);
+		statPanel.add(health, healthPanelC);
 		
 		////////////////////////////////////////////////////////////////////
 		textPanelC.gridx = 1;
@@ -257,7 +234,7 @@ public class GUI {
 				try {
 					//TODO give options for save areas
 					PrintWriter writer = new PrintWriter(saveFile);
-					writer.println(health.getHealth());
+					writer.println(health.getCurrentStatLvl());
 					writer.println(location);
 					writer.close();
 				} catch (FileNotFoundException e1) {
@@ -348,13 +325,11 @@ public class GUI {
 		loseHealth.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				int current = health.getHealth() - 1;
+				int current = health.getCurrentStatLvl() - 1;
 				if (current > 0) {
-					health.setColor(0, current, Color.WHITE);
-					health.setHealth(current);
-					health.repaint();
+					health.setCurrentStatLvl(current);
 				} else {
-					health.setColor(0, current, Color.WHITE);
+					health.setCurrentStatLvl(current);
 					writeText.setBackground(Color.GRAY);
 					writeText.setForeground(Color.RED);
 					writeText.setText("WASTED");
@@ -376,11 +351,7 @@ public class GUI {
 		restore.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				for (int i = health.getHealth(); i < health.getMaxHealth(); i++) {
-					health.setColor(0, i, Color.PINK);
-					health.setHealth(health.getHealth() + 1);
-					health.repaint();
-				}
+				int max = 
 			}
 		});
 		
