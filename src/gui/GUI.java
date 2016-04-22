@@ -321,6 +321,8 @@ public class GUI {
 			}
 		});
 		
+		//test merge conflict
+		
 		loseHealth.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
