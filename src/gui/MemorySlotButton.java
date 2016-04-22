@@ -45,7 +45,7 @@ public class MemorySlotButton extends JButton {
 			addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					GUI4.loadGame(fileTo);
+					GUI4.startGame(fileTo);
 				}
 			});
 		} else if (setType == 2) {

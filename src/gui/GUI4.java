@@ -23,8 +23,8 @@ public class GUI4 {
 		frame = new JFrame("Escape From College");
 		frame.setLayout(new GridBagLayout());
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setSize(950, 650);
-		frame.setMinimumSize(frame.getSize());
+		frame.setSize(1000, 650);
+		frame.setMinimumSize(new Dimension(950, 650));
 		
 		mainMenu = new JDesktopPane();
 		mainMenu.setLayout(new GridBagLayout());
@@ -73,7 +73,7 @@ public class GUI4 {
 		newGameButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				newGame();
+				startGame();
 			}
 		});
 		
@@ -84,7 +84,6 @@ public class GUI4 {
 				GridBagConstraints doneButtonC = new GridBagConstraints();
 				doneButtonC.gridy = 5;
 				doneButtonC.weightx = 1;
-				//doneButtonC.weighty = 1;
 				doneButtonC.anchor = GridBagConstraints.LAST_LINE_END;
 				JButton cancel = new JButton("Cancel");
 				loadScreen.add(cancel, doneButtonC);
@@ -95,9 +94,8 @@ public class GUI4 {
 						loadScreen.remove(cancel);
 					}
 				});
-				//TODO fix this alignment
 				loadScreen.setBounds(frame.getWidth()/4, frame.getHeight()/4,
-						loadScreen.getWidth(), loadScreen.getHeight());
+						frame.getWidth()/2, frame.getHeight()/2);
 				frame.setContentPane(loadScreen);
 			}
 		});
@@ -119,9 +117,8 @@ public class GUI4 {
 						deleteScreen.remove(done);
 					}
 				});
-				//TODO fix this alignment
 				deleteScreen.setBounds(frame.getWidth()/4, frame.getHeight()/4,
-						deleteScreen.getWidth(), deleteScreen.getHeight());
+						frame.getWidth()/2, frame.getHeight()/2);
 				frame.setContentPane(deleteScreen);
 			}
 		});
@@ -143,11 +140,11 @@ public class GUI4 {
 		frame.setVisible(true);
 	}
 	
-	private void newGame() {
+	protected static void startGame() {
 		//TODO
 	}
 	
-	public static void loadGame(File saveFile) {
+	protected static void startGame(File saveFile) {
 		//TODO
 	}
 	
@@ -155,7 +152,7 @@ public class GUI4 {
 		return numberOfMemSlots;
 	}
 	
-	public void checkForFiles(MemoryScreen toCheck) {
+	private void checkForFiles(MemoryScreen toCheck) {
 		for (int i = 1; i <= toCheck.getNumButtons(); i++) {
 			if (toCheck.getButtonAt(i).hasFile() == false) {
 				toCheck.getButtonAt(i).setEnabled(false);

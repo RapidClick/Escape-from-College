@@ -31,10 +31,9 @@ public class MemoryScreen extends JDesktopPane {
 		setLayout(new GridBagLayout());
 		setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 		GridBagConstraints c = new GridBagConstraints();
-		setSize(500, 300);
+		setSize(500, 325);
 		setPreferredSize(getSize());
 		setMinimumSize(getSize());
-		setMaximumSize(getSize());
 		setBackground(Color.GRAY);
 		if (title.equalsIgnoreCase("save")) {
 			JLabel save = new JLabel("Save");
@@ -60,6 +59,7 @@ public class MemoryScreen extends JDesktopPane {
 		if (title.equalsIgnoreCase("load")) {
 			JLabel load = new JLabel("Load");
 			c.gridy = 0;
+			c.weighty = 1;
 			c.anchor = GridBagConstraints.PAGE_START;
 			add(load, c);
 			c.anchor = GridBagConstraints.CENTER;
