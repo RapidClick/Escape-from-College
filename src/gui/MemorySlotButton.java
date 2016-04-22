@@ -57,6 +57,7 @@ public class MemorySlotButton extends JButton {
 						delete.print("");
 						delete.close();
 						hasFile = false;
+						System.out.println("Test good");
 					} catch (FileNotFoundException e1) {
 						e1.printStackTrace();
 					}

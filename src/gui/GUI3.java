@@ -96,7 +96,7 @@ public class GUI3 {
 				// TODO Auto-generated method stub
 			}
 		});
-		J
+		
 		
 		frame.setVisible(true);
 		
