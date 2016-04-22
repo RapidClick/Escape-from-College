@@ -5,6 +5,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
+import java.util.Scanner;
 
 public class MemorySlotButton extends JButton {
 	
@@ -57,7 +58,7 @@ public class MemorySlotButton extends JButton {
 						delete.print("");
 						delete.close();
 						hasFile = false;
-						System.out.println("Test good");
+						setEnabled(false);
 					} catch (FileNotFoundException e1) {
 						e1.printStackTrace();
 					}
@@ -70,6 +71,18 @@ public class MemorySlotButton extends JButton {
 	}
 	
 	public boolean hasFile() {
+		try {
+			Scanner fileCheck = new Scanner(fileTo);
+			if (fileCheck.hasNextLine() == true) {
+				hasFile = true;
+			} else {
+				hasFile = false;
+			}
+			fileCheck.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return hasFile;
 	}
 
