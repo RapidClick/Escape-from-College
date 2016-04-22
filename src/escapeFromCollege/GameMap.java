@@ -9,13 +9,21 @@ import java.util.Scanner;
 public class GameMap {
 	
 	private Room currentRoom;
+	private Room newCurrentRoom;
+	
 	
 	/**
-	 * TODO able to traverse map...
-	 * utilize getShortDescription
+	 * TODO 
+	 * basic commandParse()
+	 * utilize getShortDescription w/look command
 	 * link to parser
+	 * player object
+	 * getCurrentRoom()
+	 * setCurrentRoom()
+	 * 
 	 * 
 	 */
+	
 	public GameMap() {
 		generateMap();
 	}
@@ -26,20 +34,20 @@ public class GameMap {
 			hallwayFloorTwo, classroom201, classroom202, classroom203, classroom204;
 		
 		//initialize rooms
-		courtyard = new Room("in the Courtyard.");
-		scienceBuilding = new Room("in the lobby of the science building.");
-		hallway = new Room("in a hall way, you see a few different rooms...");
-		computerLab = new Room("in a room full of computers, they seem kind of old...");
-		classroom101 = new Room("in a classroom.");
-		classroom102 = new Room("in a classroom.");
-		classroom103 = new Room("in a classroom?");
-		misOffice = new Room("SHINE BRIGHT LIKE A JORAH!");
-		stairs = new Room("in the stairwell.");
-		hallwayFloorTwo = new Room("in the second floor hallway. You see some more classrooms...");
-		classroom201 = new Room("-EXCUSE ME! There's a class in here!!! GTFO!");
-		classroom202 = new Room("in an empty classroom...maybe...");
-		classroom203 = new Room("in a science lab, whats that smell?");
-		classroom204 = new Room("in an empty classroom.");
+		courtyard = new Room("Courtyard","in the Courtyard.");
+		scienceBuilding = new Room("Science Building", "in the lobby of the science building.");
+		hallway = new Room("First Floor Hallway","in a hall way, you see a few different rooms...");
+		computerLab = new Room("Computer Lab","in a room full of computers, they seem kind of old...");
+		classroom101 = new Room("Classroom 101","in a classroom.");
+		classroom102 = new Room("Classroom 102","in a classroom.");
+		classroom103 = new Room("Classroom 103","in a classroom?");
+		misOffice = new Room("MIS Office","SHINE BRIGHT LIKE A JORAH!");
+		stairs = new Room("Stairwell","in the stairwell.");
+		hallwayFloorTwo = new Room("Second Floor Hallway","in the second floor hallway. You see some more classrooms...");
+		classroom201 = new Room("Classroom 201","-EXCUSE ME! There's a class in here!!! GTFO!");
+		classroom202 = new Room("Classroom 202","in an empty classroom...maybe...");
+		classroom203 = new Room("Classroom 203","in a science lab, whats that smell?");
+		classroom204 = new Room("Classroom 203","in an empty classroom.");
 		
 		/**
 		 * set exits for objects, connects map.
@@ -143,6 +151,9 @@ public class GameMap {
 			else if (direction.equals("204")){
 				goRoom(direction);
 			}
+			else if (direction.equals("WhereAmI?")){
+				System.out.println(currentRoom.getRoomID());
+			}
 			else {
 				goRoom(direction);
 				System.out.println("...dumbass.");
@@ -181,5 +192,7 @@ public class GameMap {
 			System.out.println(currentRoom.getLongDescription());
 		}
 	}
+	
+	
 
 }

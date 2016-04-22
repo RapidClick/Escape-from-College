@@ -14,16 +14,17 @@ import java.lang.String;
 
 public class Room {
 	
-	private String description;
-	private HashMap<String, Room> exits;
+	private String description, roomID;
+	private HashMap<String, Room> campus;
 	
 	/**
 	 * @param description: gives current room's description
 	 */
 	
-	public Room(String description) {
+	public Room(String roomIDIn, String description) {
+		this.roomID = roomIDIn;
 		this.description = description;
-		exits = new HashMap<String, Room>();
+		campus = new HashMap<String, Room>();
 		
 	}
 	
@@ -33,8 +34,8 @@ public class Room {
 	 * @param neigbor: the room to which that exit leads 
 	 */
 	
-	public void setExit (String direction, Room neigbor){
-		exits.put(direction, neigbor);
+	public void setExit (String roomID , Room neigbor){
+		campus.put(roomID , neigbor);
 	}
 	
 	/**
@@ -54,12 +55,19 @@ public class Room {
 	}
 	
 	/**
+	 * @return name of Room
+	 */
+	public String getRoomID() {
+		return roomID;
+	}
+	
+	/**
 	 * @return a string that lists room exits
 	 */
 	
 	private String getExitString(){
 		String returnString = "Exits:";
-		Set<String> keys = exits.keySet();
+		Set<String> keys = campus.keySet();
 		for (String exit : keys){
 			returnString += " " + exit;
 		}
@@ -73,7 +81,7 @@ public class Room {
 	 * @param direction The exit's direction
 	 * @return The room in the given direction
 	 */
-	public Room getExit(String direction) {
-		return exits.get(direction);
+	public Room getExit(String roomID) {
+		return campus.get(roomID);
 	}
 }

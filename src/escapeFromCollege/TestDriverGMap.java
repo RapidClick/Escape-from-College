@@ -5,10 +5,9 @@ public class TestDriverGMap {
 	
 	public static void main(String[] args){
 		File save = new File("Save1");
-		GameMap g = new GameMap();
-		GUI gooey = new GUI(save, g);
-		//g.play();
+		GameMap2 g = new GameMap2();
+		//GUI gooey = new GUI(save, g);
+		g.play();
 		
 	}
-
 }
