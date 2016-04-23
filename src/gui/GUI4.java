@@ -3,23 +3,36 @@ package gui;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
+import java.util.Scanner;
 
 import javax.swing.*;
+import javax.swing.border.BevelBorder;
 
 public class GUI4 {
 	
-	private static int numberOfMemSlots = 4;
 	private JFrame frame;
 	private JDesktopPane mainMenu;
-	private JDesktopPane playPane;
+	private PlayPane playPane;
 	private JDesktopPane quickMenu;
 	private MemoryScreen saveScreen;
 	private MemoryScreen loadScreen;
 	private MemoryScreen deleteScreen;
-	private File lastSaveFile;
+	private static JButton continueButton = new JButton("Continue");
+	private JButton newGameButton = new JButton("New Game");
+	private JButton loadButton = new JButton("Load");
+	private JButton deleteButton = new JButton("Delete");
+	private JButton quitButton = new JButton("Quit");
+	private final static File save1 = new File("Save1");
+	private final static File save2 = new File("Save2");
+	private final static File save3 = new File("Save3");
+	private final static File save4 = new File("Save4");
+	private static File lastUsed;
+	private static Scanner readLastUsed;
+	private static Scanner read2;
+	private static PrintWriter writeLastUsed;
 	
-	public GUI4() {
-	
+	public GUI4() throws FileNotFoundException {
+		
 		frame = new JFrame("Escape From College");
 		frame.setLayout(new GridBagLayout());
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -29,11 +42,16 @@ public class GUI4 {
 		mainMenu = new JDesktopPane();
 		mainMenu.setLayout(new GridBagLayout());
 		
-		JButton continueButton = new JButton("Continue");
-		JButton newGameButton = new JButton("New Game");
-		JButton loadButton = new JButton("Load");
-		JButton deleteButton = new JButton("Delete");
-		JButton quitButton = new JButton("Quit");
+		lastUsed = null;
+		read2 = new Scanner("LastUsed");
+		readLastUsed = new Scanner(getLastUsedFile());
+		if (readLastUsed.hasNextLine() == false) {
+			continueButton.setEnabled(false);	
+		} else {
+			//TODO checks
+			continueButton.setEnabled(true);
+		}
+		
 		
 		GridBagConstraints mainMenuC = new GridBagConstraints();
 		mainMenuC.anchor = GridBagConstraints.CENTER;
@@ -47,9 +65,6 @@ public class GUI4 {
 		mainMenu.add(deleteButton, mainMenuC);
 		mainMenuC.gridy = 4;
 		mainMenu.add(quitButton, mainMenuC);
-		
-		playPane = new JDesktopPane();
-		playPane.setLayout(new GridBagLayout());
 		
 		saveScreen = new MemoryScreen("Save");
 		frame.add(saveScreen);
@@ -66,7 +81,12 @@ public class GUI4 {
 		continueButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//TODO finish this method (File lastSaveFile should help)
+				try {
+					startGame(GUI4.getLastUsedFile());
+				} catch (FileNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		});
 		
@@ -135,6 +155,7 @@ public class GUI4 {
 		});
 		
 		
+		
 		mainMenu.setVisible(true);
 		frame.setContentPane(mainMenu);
 		frame.setVisible(true);
@@ -146,10 +167,15 @@ public class GUI4 {
 	
 	protected static void startGame(File saveFile) {
 		//TODO
-	}
-	
-	public static int getNumMemSlots() {
-		return numberOfMemSlots;
+		Scanner sc;
+		try {
+			sc = new Scanner(saveFile);
+			System.out.println(sc.nextLine());
+			sc.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	private void checkForFiles(MemoryScreen toCheck) {
@@ -160,6 +186,31 @@ public class GUI4 {
 		}
 	}
 	
+	public static File getLastUsedFile() throws FileNotFoundException {
+		
+		if (read2.hasNextLine()) {
+			String check = read2.nextLine();
+			if (check.equalsIgnoreCase("Save1")) {
+				lastUsed = save1;
+			} else if (check.equalsIgnoreCase("Save2")) {
+				lastUsed = save2;
+			} else if (check.equalsIgnoreCase("Save3")) {
+				lastUsed = save3;
+			} else if (check.equalsIgnoreCase("Save4")) {
+				lastUsed = save4;
+			}
+		} else {
+			lastUsed = null;
+		}
+		return lastUsed;
+	}
 	
+	public static void setLastUsedFile(String write) throws FileNotFoundException {
+		if (write.equalsIgnoreCase("")) {
+			continueButton.setEnabled(false);
+		}
+		writeLastUsed = new PrintWriter(lastUsed);
+		writeLastUsed.print(write);
+	}
 
 }

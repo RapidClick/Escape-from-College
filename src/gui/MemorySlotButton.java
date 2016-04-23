@@ -1,6 +1,8 @@
 package gui;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.border.BevelBorder;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -32,10 +34,16 @@ public class MemorySlotButton extends JButton {
 				public void actionPerformed(ActionEvent e) {
 					PrintWriter save;
 					try {
-						save = new PrintWriter(fileTo);
-						//TODO print things that will save game
-						save.close();
-						hasFile = true;
+						if (hasFile) {
+							//TODO show "do you want to overwrite message
+						} else {
+							save = new PrintWriter(fileTo);
+							//TODO print things that will save game and remove random print to fileTo
+							save.print("save");
+							save.close();
+							hasFile = true;
+							GUI4.setLastUsedFile(fileTo.toString());
+						}
 					} catch (FileNotFoundException e1) {
 						e1.printStackTrace();
 					}
@@ -46,6 +54,13 @@ public class MemorySlotButton extends JButton {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					GUI4.startGame(fileTo);
+					try {
+						GUI4.setLastUsedFile(fileTo.toString());
+						GUI4.startGame(fileTo);
+					} catch (Exception e2) {
+						// TODO Auto-generated catch block
+						e2.printStackTrace();
+					}
 				}
 			});
 		} else if (setType == 2) {
@@ -59,6 +74,9 @@ public class MemorySlotButton extends JButton {
 						delete.close();
 						hasFile = false;
 						setEnabled(false);
+						if (fileTo.toString().equalsIgnoreCase(GUI4.getLastUsedFile().toString())) {
+							GUI4.setLastUsedFile("");
+						}
 					} catch (FileNotFoundException e1) {
 						e1.printStackTrace();
 					}
