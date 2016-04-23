@@ -53,10 +53,9 @@ public class MemorySlotButton extends JButton {
 			addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					GUI4.startGame(fileTo);
 					try {
-						GUI4.setLastUsedFile(fileTo.toString());
 						GUI4.startGame(fileTo);
+						GUI4.setLastUsedFile(fileTo.toString());
 					} catch (Exception e2) {
 						// TODO Auto-generated catch block
 						e2.printStackTrace();

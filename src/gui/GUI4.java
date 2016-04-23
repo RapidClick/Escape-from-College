@@ -22,13 +22,12 @@ public class GUI4 {
 	private JButton loadButton = new JButton("Load");
 	private JButton deleteButton = new JButton("Delete");
 	private JButton quitButton = new JButton("Quit");
-	private final static File save1 = new File("Save1");
-	private final static File save2 = new File("Save2");
-	private final static File save3 = new File("Save3");
-	private final static File save4 = new File("Save4");
-	private static File lastUsed;
+	private static File save1 = new File("Save1");;
+	private static File save2 = new File("Save2");
+	private static File save3 = new File("Save3");;
+	private static File save4 = new File("Save4");
+	private static File lastUsed = new File("LastUsed");
 	private static Scanner readLastUsed;
-	private static Scanner read2;
 	private static PrintWriter writeLastUsed;
 	
 	public GUI4() throws FileNotFoundException {
@@ -42,13 +41,10 @@ public class GUI4 {
 		mainMenu = new JDesktopPane();
 		mainMenu.setLayout(new GridBagLayout());
 		
-		lastUsed = null;
-		read2 = new Scanner("LastUsed");
-		readLastUsed = new Scanner(getLastUsedFile());
+		readLastUsed = new Scanner(lastUsed);
 		if (readLastUsed.hasNextLine() == false) {
 			continueButton.setEnabled(false);	
 		} else {
-			//TODO checks
 			continueButton.setEnabled(true);
 		}
 		
@@ -187,9 +183,9 @@ public class GUI4 {
 	}
 	
 	public static File getLastUsedFile() throws FileNotFoundException {
-		
-		if (read2.hasNextLine()) {
-			String check = read2.nextLine();
+		readLastUsed = new Scanner(lastUsed);
+		if (readLastUsed.hasNextLine()) {
+			String check = readLastUsed.nextLine();
 			if (check.equalsIgnoreCase("Save1")) {
 				lastUsed = save1;
 			} else if (check.equalsIgnoreCase("Save2")) {
@@ -200,7 +196,8 @@ public class GUI4 {
 				lastUsed = save4;
 			}
 		} else {
-			lastUsed = null;
+			System.out.println("wtf");
+			System.exit(0);
 		}
 		return lastUsed;
 	}
