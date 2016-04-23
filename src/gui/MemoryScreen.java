@@ -25,7 +25,7 @@ public class MemoryScreen extends JDesktopPane {
 	
 	public MemoryScreen(String title) {
 		super();
-		numButtons = 0;
+		numButtons = 4;	//TODO make sure this method stays up to date so that button enabalization stays current
 		setLayout(new GridBagLayout());
 		setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 		GridBagConstraints c = new GridBagConstraints();
@@ -52,7 +52,6 @@ public class MemoryScreen extends JDesktopPane {
 			slot4 = new MemorySlotButton("Slot 4", new File("Save4"), 0);
 			c.gridy = 4;
 			add(slot4, c);
-			numButtons = 4;
 		}
 		if (title.equalsIgnoreCase("load")) {
 			JLabel load = new JLabel("Load");
@@ -73,7 +72,6 @@ public class MemoryScreen extends JDesktopPane {
 			slot4 = new MemorySlotButton("Slot 4", new File("Save4"), 1);
 			c.gridy = 4;
 			add(slot4, c);
-			numButtons = 4;
 		}
 		if (title.equalsIgnoreCase("delete")) {
 			JLabel delete = new JLabel("Delete");
@@ -95,7 +93,6 @@ public class MemoryScreen extends JDesktopPane {
 			slot4 = new MemorySlotButton("Slot 4", new File("Save4"), 2);
 			c.gridy = 4;
 			add(slot4, c);
-			numButtons = 4;
 		}
 	}
 	

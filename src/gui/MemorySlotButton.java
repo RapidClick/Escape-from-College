@@ -13,6 +13,7 @@ public class MemorySlotButton extends JButton {
 	
 	private File fileTo;
 	private boolean hasFile;
+	private Scanner fileChecker;
 	
 	/**
 	 * 
@@ -34,15 +35,14 @@ public class MemorySlotButton extends JButton {
 				public void actionPerformed(ActionEvent e) {
 					PrintWriter save;
 					try {
-						if (hasFile) {
-							//TODO show "do you want to overwrite message
+						if (hasFile()) {
+							//TODO show "do you want to overwrite" message
 						} else {
 							save = new PrintWriter(fileTo);
+							GUI4.setLastUsedFile(fileTo.toString());
 							//TODO print things that will save game and remove random print to fileTo
 							save.print("save");
 							save.close();
-							hasFile = true;
-							GUI4.setLastUsedFile(fileTo.toString());
 						}
 					} catch (FileNotFoundException e1) {
 						e1.printStackTrace();
@@ -54,48 +54,53 @@ public class MemorySlotButton extends JButton {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					try {
-						GUI4.startGame(fileTo);
 						GUI4.setLastUsedFile(fileTo.toString());
-					} catch (Exception e2) {
-						// TODO Auto-generated catch block
-						e2.printStackTrace();
+					} catch (FileNotFoundException e1) {
+						e1.printStackTrace();
 					}
+					//TODO
+					//TODO
+					//TODO
+					//TODO startGame(fileTo);
+					/*
+					 * to start game either:
+					 * startGame has to be static and this starts making everything static
+					 * OR
+					 * every layer needs to be given the layer it is being added to so it can modify upwards
+					 * ^(will this work/is it ok?)
+					 */
 				}
 			});
 		} else if (setType == 2) {
 			addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					PrintWriter delete;
 					try {
-						delete = new PrintWriter(fileTo);
+						PrintWriter delete = new PrintWriter(fileTo);
 						delete.print("");
 						delete.close();
-						hasFile = false;
 						setEnabled(false);
-						if (fileTo.toString().equalsIgnoreCase(GUI4.getLastUsedFile().toString())) {
+						if ((GUI4.getLastUsedFile().toString()).equalsIgnoreCase(fileTo.toString())) {
 							GUI4.setLastUsedFile("");
 						}
 					} catch (FileNotFoundException e1) {
+						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
 				}
 			});
 		} else {
-			throw new RuntimeException("This button needs to be set to save, load, or delete a"
+			throw new RuntimeException("This button needs to be set to a save, load, or delete"
 					+ "function, intiger set in method call is not accepted");
 		}
 	}
 	
 	public boolean hasFile() {
 		try {
-			Scanner fileCheck = new Scanner(fileTo);
-			if (fileCheck.hasNextLine() == true) {
+			fileChecker = new Scanner(fileTo);
+			if (fileChecker.hasNextLine()) {
 				hasFile = true;
-			} else {
-				hasFile = false;
 			}
-			fileCheck.close();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
