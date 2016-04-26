@@ -12,14 +12,13 @@ public class GUI4 {
 	private JFrame frame;
 	private JDesktopPane mainMenu;
 	private PlayPane playPane;
-	//TODO will this be inside playPane or the frame?
-	//private JDesktopPane quickMenu;
+	private JDesktopPane quickMenu;
 	private MemoryScreen saveScreen;
 	private MemoryScreen loadScreen;
 	private MemoryScreen deleteScreen;
-	private File save1 = new File("Save1");;
+	private File save1 = new File("Save1");
 	private File save2 = new File("Save2");
-	private File save3 = new File("Save3");;
+	private File save3 = new File("Save3");
 	private File save4 = new File("Save4");
 	private File lastUsed = new File("LastUsed");
 	private Scanner readLastUsed;
@@ -69,20 +68,26 @@ public class GUI4 {
 		if (readLastUsed.hasNextLine() == false) {
 			continueButton.setEnabled(false);
 		}
-		/////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		
+		
+		//MAIN MENU BUTTON LISTENERS ////////////////////////////////////////////////////////////
+		
 		continueButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//TODO startGame(getLastUsedFile);
-				
+				try {
+					startGame(getLastUsedFile());
+				} catch (FileNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		});
 		
 		newGameButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+				startGame();
 			}
 		});
 		
@@ -163,7 +168,7 @@ public class GUI4 {
 		
 		for (int i = 1; i < deleteScreen.getNumButtons(); i++) {
 			deleteScreen.getButtonAt(i).addActionListener(
-					new DeleteButtonListener(deleteScreen.getButtonAt(i).getFile()));
+					new DeleteButtonListener(deleteScreen.getButtonAt(i).getFile(), i));
 		}
 		
 		for (int i = 1; i < saveScreen.getNumButtons(); i++) {
@@ -176,6 +181,10 @@ public class GUI4 {
 		frame.setVisible(true);
 	
 	}
+	
+	
+	
+	//METHODS FOR USE IN GUI CONSTRUCTOR ////////////////////////////////////////////////////////////////
 	
 	private void checkForFiles(MemoryScreen toCheck) {
 		for (int i = 1; i <= toCheck.getNumButtons(); i++) {
@@ -215,6 +224,7 @@ public class GUI4 {
 	
 	public void startGame(File toStartFrom) {
 		if (frame.getContentPane().equals(loadScreen)) {
+			//TODO is this necessary?
 			frame.setContentPane(mainMenu);
 			//TODO load the game
 			//frame.setContentPane(playPane);
@@ -223,11 +233,9 @@ public class GUI4 {
 		}
 	}
 	
-	/*
-	 * TODO set up a method that handles returning to mainMenu - this method should check to see if
-	 * continueButton should be enabled
-	 */
 	
+	
+	//MEMORY BUTTON LISTENERS ////////////////////////////////////////////////////////////////////////
 	
 	private class LoadButtonListener implements ActionListener {
 		private File thisFile;
@@ -248,13 +256,25 @@ public class GUI4 {
 	
 	private class DeleteButtonListener implements ActionListener {
 		private File thisFile;
-		public DeleteButtonListener(File thisFileIn) {
+		private int buttonNum;
+		public DeleteButtonListener(File thisFileIn, int setButtonNum) {
 			super();
 			thisFile = thisFileIn;
+			buttonNum = setButtonNum;
 		}
 		public void actionPerformed(ActionEvent e) {
-			
-			//TODO delete the memory of the file linked to this slot
+			try {
+				PrintWriter delete = new PrintWriter(thisFile);
+				delete.print("");
+				delete.close();
+				deleteScreen.getButtonAt(buttonNum).setEnabled(false);
+				if (getLastUsedFile().toString().equalsIgnoreCase(thisFile.toString())) {
+					setLastUsedFile("");
+				}
+			} catch (FileNotFoundException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		}
 	}
 	
