@@ -1,22 +1,27 @@
-package escapeFromCollege;
+package gui;
 
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.awt.print.PrinterException;
 import java.io.*;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
+
+import escapeFromCollege.GameMap;
+
 import java.util.*;
 
 public class GUI {
 	
 	private int location = 1;
-	private JFrame frame;
-	private JFrame chooseFrame;
-	private HealthBar health;
-	private JTextArea scrollText;
-	private JTextArea writeText;
+	private static JFrame frame;
+	private static JFrame chooseFrame;
+	private static JTextArea scrollText;
+	private static JTextArea writeText;
+	private static JPanel backGround = new JPanel();
+	private static StatBox health = new StatBox("Health", Color.LIGHT_GRAY, Color.PINK);
 	
 	public GUI(File saveFile, GameMap map) {
 		
@@ -27,7 +32,7 @@ public class GUI {
 		frame.setMinimumSize(defaultDim);
 		frame.setLayout(new GridBagLayout());
 		
-		chooseFrame = new JFrame("Basic Application");
+		chooseFrame = new JFrame("Main Menu");
 		chooseFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		chooseFrame.setMinimumSize(defaultDim);
 		chooseFrame.setLayout(new GridBagLayout());
@@ -61,19 +66,6 @@ public class GUI {
 		////////////////////////////////////////////////////////////
 		JPanel statPanel = new JPanel();
 		statPanel.setLayout(new GridBagLayout());
-		//**********************************************************
-		JPanel healthPanel = new JPanel();
-		healthPanel.setLayout(new GridBagLayout());
-		
-		JTextField healthTitle = new JTextField();
-		healthTitle.setBackground(Color.LIGHT_GRAY);
-		healthTitle.setEditable(false);
-		healthTitle.setText("Health");
-		
-		health = new HealthBar(1);
-		for (int i = 0; i < health.getMaxHealth(); i++) {
-			health.setColor(0, i, Color.PINK);
-		}
 		
 		////////////////////////////////////////////////////////////
 		JPanel textAreaPanel = new JPanel();
@@ -99,8 +91,9 @@ public class GUI {
 		JPanel enterPanel = new JPanel();
 		enterPanel.setLayout(new GridBagLayout());
 		
-		
-		
+		MemoryScreen saveSlots = new MemoryScreen("Save");
+		MemoryScreen loadSlots = new MemoryScreen("Load");
+		MemoryScreen deleteSlots = new MemoryScreen("Delete");
 		
 		
 		JButton hello = new JButton("Hello");
@@ -110,6 +103,7 @@ public class GUI {
 		JButton enterButton = new JButton("Enter");
 		
 		JButton continueButton = new JButton("Continue");
+		JButton loadButton = new JButton("Load");
 		JButton newGameButton = new JButton("New Game");
 		JButton deleteButton = new JButton("Delete");
 		JButton quitButton = new JButton("Quit");
@@ -143,20 +137,9 @@ public class GUI {
 		healthPanelC.weighty = 1; //weighty = 1 should be applied to last stat bar
 		healthPanelC.anchor = GridBagConstraints.NORTH;
 		healthPanelC.fill = GridBagConstraints.HORIZONTAL;
-		healthPanel.setPreferredSize(new Dimension(1, 38));
-		healthPanel.setBackground(Color.LIGHT_GRAY);
-		statPanel.add(healthPanel, healthPanelC);
-		
-		iHealthPanelC.weightx = 0;
-		iHealthPanelC.weightx = 1;
-		healthPanel.add(healthTitle, iHealthPanelC);
-		
-		iHealthPanelC.gridx = 1;
-		health.setBackground(Color.LIGHT_GRAY);
-		for (int i = 0; i < health.getMaxHealth(); i++) {
-			health.setColor(0, i, Color.PINK);
-		}
-		healthPanel.add(health, iHealthPanelC);
+		//healthPanel.setPreferredSize(new Dimension(1, 38));
+		//healthPanel.setBackground(Color.LIGHT_GRAY);
+		//StatBox health = new StatBox("Health", Color.LIGHT_GRAY, Color.pink);
 		
 		////////////////////////////////////////////////////////////////////
 		textPanelC.gridx = 1;
@@ -220,10 +203,12 @@ public class GUI {
 		chooseC.gridy = 0;
 		chooseFrame.add(continueButton, chooseC);
 		chooseC.gridy = 1;
-		chooseFrame.add(newGameButton, chooseC);
+		chooseFrame.add(loadButton, chooseC);
 		chooseC.gridy = 2;
-		chooseFrame.add(deleteButton, chooseC);
+		chooseFrame.add(newGameButton, chooseC);
 		chooseC.gridy = 3;
+		chooseFrame.add(deleteButton, chooseC);
+		chooseC.gridy = 4;
 		chooseFrame.add(quitButton, chooseC);
 		
 		try {
@@ -248,7 +233,7 @@ public class GUI {
 				try {
 					//TODO give options for save areas
 					PrintWriter writer = new PrintWriter(saveFile);
-					writer.println(health.getHealth());
+					writer.println(health.getCurrentStatLvl());
 					writer.println(location);
 					writer.close();
 				} catch (FileNotFoundException e1) {
@@ -336,16 +321,16 @@ public class GUI {
 			}
 		});
 		
+		//test merge conflict
+		
 		loseHealth.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				int current = health.getHealth() - 1;
+				int current = health.getCurrentStatLvl() - 1;
 				if (current > 0) {
-					health.setColor(0, current, Color.WHITE);
-					health.setHealth(current);
-					health.repaint();
+					health.setCurrentStatLvl(current);
 				} else {
-					health.setColor(0, current, Color.WHITE);
+					health.setCurrentStatLvl(current);
 					writeText.setBackground(Color.GRAY);
 					writeText.setForeground(Color.RED);
 					writeText.setText("WASTED");
@@ -353,6 +338,8 @@ public class GUI {
 							JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null) 
 							== JOptionPane.YES_OPTION) {
 						frame.dispose();
+						chooseFrame.remove(loadSlots);
+						//chooseFrame.remove(backgroundPanel);
 						chooseFrame.setVisible(true);
 					} else {
 						frame.dispose();
@@ -365,11 +352,7 @@ public class GUI {
 		restore.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				for (int i = health.getHealth(); i < health.getMaxHealth(); i++) {
-					health.setColor(0, i, Color.PINK);
-					health.setHealth(health.getHealth() + 1);
-					health.repaint();
-				}
+				health.setFull();
 			}
 		});
 		
@@ -402,14 +385,18 @@ public class GUI {
 			}
 		});
 		
+		loadButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				addMemPanel(loadSlots, chooseFrame);
+			}
+		});
+		
 		newGameButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				health.setHealth(health.getMaxHealth());
-				for (int i = 0; i < health.getMaxHealth(); i ++) {
-					health.setColor(0, i, Color.PINK);
-				}
 				location = 1;
+				statPanel.add(health);
 				scrollText.setText("This is a framework for a basic text adventure");
 				scrollText.setText(scrollText.getText() + map.printWelcome());
 				writeText.setText("");
@@ -453,18 +440,12 @@ public class GUI {
 		chooseFrame.setVisible(true);
 	}
 	
-	public void loadGame(File saveFile) {
+	public static void loadGame(File saveFile) {
 		try {
 			Scanner read = new Scanner(saveFile);
 			try {
-				health.setHealth(read.nextInt());
+				health.setCurrentStatLvl(read.nextInt());
 				read.close();
-				for (int i = 0; i < health.getHealth(); i++) {
-					health.setColor(0, i, Color.PINK);
-				}
-				for (int i = health.getHealth(); i < health.getMaxHealth(); i++) {
-					health.setColor(0, i, Color.WHITE);
-				}
 				writeText.setText("");
 				writeText.setBackground(Color.WHITE);
 				writeText.setForeground(Color.BLACK);
@@ -473,7 +454,7 @@ public class GUI {
 				frame.pack();
 				frame.repaint();
 				frame.setVisible(true);
-				chooseFrame.dispose();
+				chooseFrame.setVisible(false);
 			} catch (NoSuchElementException E) {
 				scrollText.setText("No saved game. Starting new game:\n\n" + scrollText.getText());
 				frame.setMinimumSize(new Dimension(925, 600));
@@ -484,6 +465,31 @@ public class GUI {
 		} catch (FileNotFoundException e1) {
 			e1.printStackTrace();
 		}
+	}
+	
+	public void addMemPanel(MemoryScreen memPanel, JFrame backFrame) {
+		backGround = new JPanel();
+		GridBagConstraints backGroundC = new GridBagConstraints();
+		GridBagConstraints memPanelC = new GridBagConstraints();
+		backGround.setSize(backFrame.getSize());
+		backGroundC.anchor = GridBagConstraints.CENTER;
+		backGroundC.fill = GridBagConstraints.BOTH;
+		backGroundC.weighty = 1;
+		backGroundC.weightx = 1;
+		backFrame.add(backGround, backGroundC);
+		memPanelC.gridy = 0;
+		File slot1 = new File("Save1");
+		File slot2 = new File("Save2");
+		File slot3 = new File("Save3");
+		memPanel.add(new MemorySlotButton("Slot 1", slot1), memPanelC);
+		memPanelC.gridy = 2;
+		memPanel.add(new MemorySlotButton("Slot 2", slot2), memPanelC);
+		memPanelC.gridy = 4;
+		memPanel.add(new MemorySlotButton("Slot 3", slot3), memPanelC);
+		memPanelC.anchor = GridBagConstraints.CENTER;
+		memPanelC.fill = GridBagConstraints.BOTH;
+		backGround.add(memPanel, memPanelC);
+		backFrame.setContentPane(backGround);
 	}
 
 }
