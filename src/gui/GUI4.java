@@ -6,7 +6,6 @@ import java.io.*;
 import java.util.Scanner;
 
 import javax.swing.*;
-import javax.swing.border.BevelBorder;
 
 public class GUI4 {
 	
@@ -18,13 +17,13 @@ public class GUI4 {
 	private MemoryScreen saveScreen;
 	private MemoryScreen loadScreen;
 	private MemoryScreen deleteScreen;
-	private static File save1 = new File("Save1");;
-	private static File save2 = new File("Save2");
-	private static File save3 = new File("Save3");;
-	private static File save4 = new File("Save4");
-	private static File lastUsed = new File("LastUsed");
-	private static Scanner readLastUsed;
-	private static PrintWriter writeLastUsed;
+	private File save1 = new File("Save1");;
+	private File save2 = new File("Save2");
+	private File save3 = new File("Save3");;
+	private File save4 = new File("Save4");
+	private File lastUsed = new File("LastUsed");
+	private Scanner readLastUsed;
+	private PrintWriter writeLastUsed;
 	
 	public GUI4() throws FileNotFoundException {
 	
@@ -47,15 +46,11 @@ public class GUI4 {
 		deleteScreen = new MemoryScreen("Delete");
 		frame.add(deleteScreen);
 		
-		//lastUsed = new File("LastUsed");
-		
 		JButton continueButton = new JButton("Continue");
 		JButton newGameButton = new JButton("New Game");
 		JButton loadButton = new JButton("Load");
 		JButton deleteButton = new JButton("Delete");
 		JButton quitButton = new JButton("Quit");
-		//TODO remove this button after using to test code
-		MemorySlotButton saveButton = new MemorySlotButton("save", save1, 0);
 		
 		GridBagConstraints mainMenuC = new GridBagConstraints();
 		mainMenuC.anchor = GridBagConstraints.CENTER;
@@ -69,19 +64,18 @@ public class GUI4 {
 		mainMenu.add(deleteButton, mainMenuC);
 		mainMenuC.gridy = 4;
 		mainMenu.add(quitButton, mainMenuC);
-		//TODO remove this button after done testing
-		mainMenuC.gridy = 5;
-		mainMenu.add(saveButton, mainMenuC);
 		
 		readLastUsed = new Scanner(lastUsed);
 		if (readLastUsed.hasNextLine() == false) {
 			continueButton.setEnabled(false);
 		}
-		
+		/////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		continueButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				//TODO startGame(getLastUsedFile);
+				
 			}
 		});
 		
@@ -162,6 +156,21 @@ public class GUI4 {
 		});
 		
 		
+		for (int i = 1; i < loadScreen.getNumButtons(); i++) {
+			loadScreen.getButtonAt(i).addActionListener(
+					new LoadButtonListener(loadScreen.getButtonAt(i).getFile()));
+		}
+		
+		for (int i = 1; i < deleteScreen.getNumButtons(); i++) {
+			deleteScreen.getButtonAt(i).addActionListener(
+					new DeleteButtonListener(deleteScreen.getButtonAt(i).getFile()));
+		}
+		
+		for (int i = 1; i < saveScreen.getNumButtons(); i++) {
+			saveScreen.getButtonAt(i).addActionListener(
+					new SaveButtonListener(saveScreen.getButtonAt(i).getFile()));
+		}
+		
 		
 		frame.setContentPane(mainMenu);
 		frame.setVisible(true);
@@ -177,7 +186,7 @@ public class GUI4 {
 	}
 		
 	
-	public static File getLastUsedFile() throws FileNotFoundException {
+	public File getLastUsedFile() throws FileNotFoundException {
 		lastUsed = new File("LastUsed");
 		readLastUsed = new Scanner(lastUsed);
 		String check = readLastUsed.nextLine();
@@ -193,7 +202,7 @@ public class GUI4 {
 		return lastUsed;
 	}
 	
-	public static void setLastUsedFile(String write) throws FileNotFoundException {
+	public void setLastUsedFile(String write) throws FileNotFoundException {
 		lastUsed = new File("LastUsed");
 		writeLastUsed = new PrintWriter(lastUsed);
 		writeLastUsed.print(write);
@@ -208,9 +217,9 @@ public class GUI4 {
 		if (frame.getContentPane().equals(loadScreen)) {
 			frame.setContentPane(mainMenu);
 			//TODO load the game
-			frame.setContentPane(playPane);
+			//frame.setContentPane(playPane);
 		} else {
-			
+			//TODO load the game
 		}
 	}
 	
@@ -218,4 +227,53 @@ public class GUI4 {
 	 * TODO set up a method that handles returning to mainMenu - this method should check to see if
 	 * continueButton should be enabled
 	 */
+	
+	
+	private class LoadButtonListener implements ActionListener {
+		private File thisFile;
+		public LoadButtonListener(File thisFileIn) {
+			super();
+			thisFile = thisFileIn;
+		}
+		public void actionPerformed(ActionEvent e) {
+			try {
+				setLastUsedFile(thisFile.toString());
+			} catch (FileNotFoundException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			startGame(thisFile);
+		}
+	}
+	
+	private class DeleteButtonListener implements ActionListener {
+		private File thisFile;
+		public DeleteButtonListener(File thisFileIn) {
+			super();
+			thisFile = thisFileIn;
+		}
+		public void actionPerformed(ActionEvent e) {
+			
+			//TODO delete the memory of the file linked to this slot
+		}
+	}
+	
+	private class SaveButtonListener implements ActionListener {
+		private File thisFile;
+		public SaveButtonListener(File thisFileIn) {
+			super();
+			thisFile = thisFileIn;
+		}
+		public void actionPerformed(ActionEvent e) {
+			try {
+				setLastUsedFile(thisFile.toString());
+			} catch (FileNotFoundException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			//TODO save the game to this slot
+		}
+	}
+	
+	
 }

@@ -1,17 +1,8 @@
 package gui;
 
-import java.awt.Color;
-import java.awt.ComponentOrientation;
-import java.awt.GraphicsDevice;
-import java.awt.GraphicsEnvironment;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.GraphicsDevice.WindowTranslucency.*;
+import java.awt.*;
 import java.io.File;
-
 import javax.swing.*;
-
-import com.sun.glass.ui.Window;
 
 //TODO check out imports
 
@@ -40,16 +31,16 @@ public class MemoryScreen extends JDesktopPane {
 			c.anchor = GridBagConstraints.PAGE_START;
 			add(save, c);
 			c.anchor = GridBagConstraints.CENTER;
-			slot1 = new MemorySlotButton("Slot 1", new File("Save1"), 0);
+			slot1 = new MemorySlotButton("Slot 1", new File("Save1"));
 			c.gridy = 1;
 			add(slot1, c);
-			slot2 = new MemorySlotButton("Slot 2", new File("Save2"), 0);
+			slot2 = new MemorySlotButton("Slot 2", new File("Save2"));
 			c.gridy = 2;
 			add(slot2, c);
-			slot3 = new MemorySlotButton("Slot 3", new File("Save3"), 0);
+			slot3 = new MemorySlotButton("Slot 3", new File("Save3"));
 			c.gridy = 3;
 			add(slot3, c);
-			slot4 = new MemorySlotButton("Slot 4", new File("Save4"), 0);
+			slot4 = new MemorySlotButton("Slot 4", new File("Save4"));
 			c.gridy = 4;
 			add(slot4, c);
 		}
@@ -60,16 +51,16 @@ public class MemoryScreen extends JDesktopPane {
 			c.anchor = GridBagConstraints.PAGE_START;
 			add(load, c);
 			c.anchor = GridBagConstraints.CENTER;
-			slot1 = new MemorySlotButton("Slot 1", new File("Save1"), 1);
+			slot1 = new MemorySlotButton("Slot 1", new File("Save1"));
 			c.gridy = 1;
 			add(slot1, c);
-			slot2 = new MemorySlotButton("Slot 2", new File("Save2"), 1);
+			slot2 = new MemorySlotButton("Slot 2", new File("Save2"));
 			c.gridy = 2;
 			add(slot2, c);
-			slot3 = new MemorySlotButton("Slot 3", new File("Save3"), 1);
+			slot3 = new MemorySlotButton("Slot 3", new File("Save3"));
 			c.gridy = 3;
 			add(slot3, c);
-			slot4 = new MemorySlotButton("Slot 4", new File("Save4"), 1);
+			slot4 = new MemorySlotButton("Slot 4", new File("Save4"));
 			c.gridy = 4;
 			add(slot4, c);
 		}
@@ -81,16 +72,16 @@ public class MemoryScreen extends JDesktopPane {
 			add(delete, c);
 			c.anchor = GridBagConstraints.CENTER;
 			c.weighty = 1;
-			slot1 = new MemorySlotButton("Slot 1", new File("Save1"), 2);
+			slot1 = new MemorySlotButton("Slot 1", new File("Save1"));
 			c.gridy = 1;
 			add(slot1, c);
-			slot2 = new MemorySlotButton("Slot 2", new File("Save2"), 2);
+			slot2 = new MemorySlotButton("Slot 2", new File("Save2"));
 			c.gridy = 2;
 			add(slot2, c);
-			slot3 = new MemorySlotButton("Slot 3", new File("Save3"), 2);
+			slot3 = new MemorySlotButton("Slot 3", new File("Save3"));
 			c.gridy = 3;
 			add(slot3, c);
-			slot4 = new MemorySlotButton("Slot 4", new File("Save4"), 2);
+			slot4 = new MemorySlotButton("Slot 4", new File("Save4"));
 			c.gridy = 4;
 			add(slot4, c);
 		}
