@@ -178,7 +178,7 @@ public class GUI4 {
 		
 		
 		
-		mainMenu.addKeyListener(new KeyListener() {
+		playPane.addKeyListener(new KeyListener() {
 			@Override
 			public void keyTyped(KeyEvent e) {	
 			}
@@ -194,8 +194,8 @@ public class GUI4 {
 					cancel.addActionListener(new ActionListener() {
 						@Override
 						public void actionPerformed(ActionEvent e) {
-							frame.setContentPane(mainMenu);
-							mainMenu.requestFocus();
+							frame.setContentPane(playPane);
+							playPane.requestFocus();
 							saveScreen.remove(cancel);
 						}
 					});
@@ -206,9 +206,6 @@ public class GUI4 {
 			}
 			@Override
 			public void keyReleased(KeyEvent e) {
-				if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-					System.out.println("released");
-				}
 			}
 		});
 		
@@ -259,15 +256,14 @@ public class GUI4 {
 	public void startGame() {
 		playPane.setBounds(0, 0, frame.getWidth(), frame.getHeight());
 		frame.setContentPane(playPane);
+		playPane.requestFocus();
 	}
 	
 	public void startGame(File toStartFrom) {
-		if (frame.getContentPane().equals(loadScreen)) {
-			//TODO load the game
-			//frame.setContentPane(playPane);
-		} else {
-			//TODO load the game
-		}
+		//TODO load the game
+		playPane.setBounds(0, 0, frame.getWidth(), frame.getHeight());
+		frame.setContentPane(playPane);
+		playPane.requestFocus();
 	}
 	
 	

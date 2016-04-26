@@ -15,8 +15,12 @@ public class PlayPane extends JDesktopPane {
 	private StatBox healthBox;
 	
 	public PlayPane() {
+		super();
 		setLayout(new GridBagLayout());
 		setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
+		setSize(1100, 628);
+		setPreferredSize(getSize());
+		setMinimumSize(getSize());
 		
 		statPanel = new JPanel();
 		statPanel.setLayout(new GridBagLayout());
@@ -39,9 +43,7 @@ public class PlayPane extends JDesktopPane {
 		writeText = new JTextArea();
 		writeText.setLineWrap(true);
 		JScrollPane lowerScrollPane = new JScrollPane(writeText);
-		lowerScrollPane.setPreferredSize(new Dimension(525, 100));
-		lowerScrollPane.setMinimumSize(lowerScrollPane.getSize());
-		lowerScrollPane.setMaximumSize(lowerScrollPane.getSize());
+		lowerScrollPane.setPreferredSize(new Dimension(525, 300));
 		writeText.setWrapStyleWord(true);
 		
 		
@@ -71,23 +73,24 @@ public class PlayPane extends JDesktopPane {
 		statPanel.add(healthBox, statPanelC);
 		
 		playPaneC.gridx = 1;
+		playPaneC.gridy = 0;
 		playPaneC.gridheight = 2;
 		playPaneC.weighty = 1;
-		playPaneC.weightx = .6;
+		playPaneC.weightx = 1;
 		playPaneC.fill = GridBagConstraints.VERTICAL;
 		playPaneC.anchor = GridBagConstraints.NORTHWEST;
 		add(textPanel, playPaneC);
 		
 		textPanelC.gridy = 0;
+		textPanelC.gridx = 0;
 		textPanelC.weighty = 1;
-		textPanelC.fill = GridBagConstraints.VERTICAL;
+		textPanelC.weightx = 1;
+		textPanelC.fill = GridBagConstraints.BOTH;
 		textPanelC.anchor = GridBagConstraints.NORTH;
 		textPanel.add(upperScrollPane, textPanelC);
 		
 		textPanelC.gridy = 1;
 		textPanelC.weighty = 0;
-		textPanelC.fill = GridBagConstraints.NONE;
-		textPanelC.anchor = GridBagConstraints.SOUTH;
 		textPanel.add(lowerScrollPane, textPanelC);
 		
 		playPaneC.gridx = 2;
@@ -105,6 +108,10 @@ public class PlayPane extends JDesktopPane {
 	
 	public JTextArea getWriteText() {
 		return writeText;
+	}
+	
+	public String getWriteTextString() {
+		return writeText.getText();
 	}
 
 }
