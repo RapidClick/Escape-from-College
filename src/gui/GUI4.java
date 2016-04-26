@@ -177,35 +177,6 @@ public class GUI4 {
 		}
 		
 		
-		frame.addKeyListener(new KeyListener() {
-			@Override
-			public void keyTyped(KeyEvent e) {	
-			}
-			@Override
-			public void keyPressed(KeyEvent e) {
-				if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-					GridBagConstraints doneButtonC = new GridBagConstraints();
-					doneButtonC.gridy = 5;
-					doneButtonC.weightx = 1;
-					doneButtonC.anchor = GridBagConstraints.LAST_LINE_END;
-					JButton cancel = new JButton("Cancel");
-					saveScreen.add(cancel, doneButtonC);
-					cancel.addActionListener(new ActionListener() {
-						@Override
-						public void actionPerformed(ActionEvent e) {
-							frame.setContentPane(mainMenu);
-							saveScreen.remove(cancel);
-						}
-					});
-					saveScreen.setBounds(frame.getWidth()/4, frame.getHeight()/4,
-							frame.getWidth()/2, frame.getHeight()/2);
-					frame.setContentPane(saveScreen);
-				}
-			}
-			@Override
-			public void keyReleased(KeyEvent e) {
-			}
-		});
 		
 		mainMenu.addKeyListener(new KeyListener() {
 			@Override
@@ -224,6 +195,7 @@ public class GUI4 {
 						@Override
 						public void actionPerformed(ActionEvent e) {
 							frame.setContentPane(mainMenu);
+							mainMenu.requestFocus();
 							saveScreen.remove(cancel);
 						}
 					});
@@ -234,6 +206,9 @@ public class GUI4 {
 			}
 			@Override
 			public void keyReleased(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+					System.out.println("released");
+				}
 			}
 		});
 		
@@ -241,6 +216,7 @@ public class GUI4 {
 		
 		frame.setContentPane(mainMenu);
 		frame.setVisible(true);
+		mainMenu.requestFocus();
 	
 	}
 	
@@ -353,6 +329,7 @@ public class GUI4 {
 				e1.printStackTrace();
 			}
 			//TODO save the game to this slot
+			//TODO check for need of overwrite warning necessity
 		}
 	}
 	
