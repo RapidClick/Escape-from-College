@@ -28,6 +28,7 @@ public class MemoryScreen extends JDesktopPane {
 			JLabel save = new JLabel("Save");
 			//TODO save.setBounds(1, 1, 40, 40);
 			c.gridy = 0;
+			c.weighty = 1;
 			c.anchor = GridBagConstraints.PAGE_START;
 			add(save, c);
 			c.anchor = GridBagConstraints.CENTER;

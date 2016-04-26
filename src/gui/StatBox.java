@@ -17,7 +17,7 @@ public class StatBox extends JPanel {
 	private int full;
 	
 	public StatBox(String title, Color boxColorIn, Color barColorIn) {
-		setSize(300,45); //y =38
+		setSize(285,38); //y =38
 		setLayout(new GridBagLayout());
 		setPreferredSize(getSize());
 		setBackground(boxColorIn);

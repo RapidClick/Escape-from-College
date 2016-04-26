@@ -29,8 +29,8 @@ public class GUI4 {
 		frame = new JFrame("Escape From College");
 		frame.setLayout(new GridBagLayout());
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setSize(1000, 650);
-		frame.setMinimumSize(new Dimension(1000, 650));
+		frame.setSize(1100, 650);
+		frame.setMinimumSize(new Dimension(1100, 650));
 		
 		mainMenu = new JDesktopPane();
 		mainMenu.setLayout(new GridBagLayout());
@@ -177,6 +177,68 @@ public class GUI4 {
 		}
 		
 		
+		frame.addKeyListener(new KeyListener() {
+			@Override
+			public void keyTyped(KeyEvent e) {	
+			}
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+					GridBagConstraints doneButtonC = new GridBagConstraints();
+					doneButtonC.gridy = 5;
+					doneButtonC.weightx = 1;
+					doneButtonC.anchor = GridBagConstraints.LAST_LINE_END;
+					JButton cancel = new JButton("Cancel");
+					saveScreen.add(cancel, doneButtonC);
+					cancel.addActionListener(new ActionListener() {
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							frame.setContentPane(mainMenu);
+							saveScreen.remove(cancel);
+						}
+					});
+					saveScreen.setBounds(frame.getWidth()/4, frame.getHeight()/4,
+							frame.getWidth()/2, frame.getHeight()/2);
+					frame.setContentPane(saveScreen);
+				}
+			}
+			@Override
+			public void keyReleased(KeyEvent e) {
+			}
+		});
+		
+		mainMenu.addKeyListener(new KeyListener() {
+			@Override
+			public void keyTyped(KeyEvent e) {	
+			}
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+					GridBagConstraints doneButtonC = new GridBagConstraints();
+					doneButtonC.gridy = 5;
+					doneButtonC.weightx = 1;
+					doneButtonC.anchor = GridBagConstraints.LAST_LINE_END;
+					JButton cancel = new JButton("Cancel");
+					saveScreen.add(cancel, doneButtonC);
+					cancel.addActionListener(new ActionListener() {
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							frame.setContentPane(mainMenu);
+							saveScreen.remove(cancel);
+						}
+					});
+					saveScreen.setBounds(frame.getWidth()/4, frame.getHeight()/4,
+							frame.getWidth()/2, frame.getHeight()/2);
+					frame.setContentPane(saveScreen);
+				}
+			}
+			@Override
+			public void keyReleased(KeyEvent e) {
+			}
+		});
+		
+		
+		
 		frame.setContentPane(mainMenu);
 		frame.setVisible(true);
 	
@@ -219,13 +281,12 @@ public class GUI4 {
 	}
 	
 	public void startGame() {
-		
+		playPane.setBounds(0, 0, frame.getWidth(), frame.getHeight());
+		frame.setContentPane(playPane);
 	}
 	
 	public void startGame(File toStartFrom) {
 		if (frame.getContentPane().equals(loadScreen)) {
-			//TODO is this necessary?
-			frame.setContentPane(mainMenu);
 			//TODO load the game
 			//frame.setContentPane(playPane);
 		} else {
