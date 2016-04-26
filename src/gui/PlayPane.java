@@ -22,6 +22,7 @@ public class PlayPane extends JDesktopPane {
 		setPreferredSize(getSize());
 		setMinimumSize(getSize());
 		
+		
 		statPanel = new JPanel();
 		statPanel.setLayout(new GridBagLayout());
 		statPanel.setSize(285, 628);  // the width of the standard StatBox, height of the frame
@@ -43,7 +44,7 @@ public class PlayPane extends JDesktopPane {
 		writeText = new JTextArea();
 		writeText.setLineWrap(true);
 		JScrollPane lowerScrollPane = new JScrollPane(writeText);
-		lowerScrollPane.setPreferredSize(new Dimension(525, 300));
+		lowerScrollPane.setPreferredSize(new Dimension(525, 125));
 		writeText.setWrapStyleWord(true);
 		
 		
@@ -96,11 +97,11 @@ public class PlayPane extends JDesktopPane {
 		playPaneC.gridx = 2;
 		playPaneC.gridy = 0;
 		playPaneC.weighty = 1;
-		//add(invtPanel, playPaneC);
+		add(invtPanel, playPaneC);
 		
 		playPaneC.gridy = 1;
 		playPaneC.weighty = 0;
-		//add(enterPanel, playPaneC);
+		add(enterPanel, playPaneC);
 		
 		
 		

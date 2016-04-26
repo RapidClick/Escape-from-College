@@ -254,14 +254,14 @@ public class GUI4 {
 	}
 	
 	public void startGame() {
-		playPane.setBounds(0, 0, frame.getWidth(), frame.getHeight());
+		playPane.setBounds(0, 0, frame.getWidth(), 628);
 		frame.setContentPane(playPane);
 		playPane.requestFocus();
 	}
 	
 	public void startGame(File toStartFrom) {
 		//TODO load the game
-		playPane.setBounds(0, 0, frame.getWidth(), frame.getHeight());
+		playPane.setBounds(0, 0, frame.getWidth(), 628);
 		frame.setContentPane(playPane);
 		playPane.requestFocus();
 	}
