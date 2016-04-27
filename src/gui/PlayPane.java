@@ -40,6 +40,7 @@ public class PlayPane extends JDesktopPane {
 		upperScrollPane.setPreferredSize(new Dimension(525, 1));
 		scrollText.setWrapStyleWord(true);
 		scrollText.setEditable(false);
+		scrollText.setFocusable(false);
 		
 		writeText = new JTextArea();
 		writeText.setLineWrap(true);

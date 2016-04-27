@@ -315,7 +315,8 @@ public class GUI4 {
 					frame.setContentPane(playPane);
 					playPane.getWriteText().requestFocus();
 				} else {
-					quickMenu.setBounds(frame.getWidth()/5, frame.getHeight()/5, 150, 350);
+					quickMenu.setBounds(frame.getWidth()/5, frame.getHeight()/5, quickMenu.getWidth(),
+							quickMenu.getHeight());
 					frame.setContentPane(quickMenu);
 					quickMenu.requestFocus();
 				}
