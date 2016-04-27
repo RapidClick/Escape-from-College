@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 public class QuickMenu extends JDesktopPane {
 	
 	CursorBar cursor;
+	CursorBar cursorRight;
 	
 	public QuickMenu() {
 		super();
@@ -22,8 +23,10 @@ public class QuickMenu extends JDesktopPane {
 		
 		setBackground(Color.LIGHT_GRAY);
 		
-		cursor = new CursorBar(4, Color.RED);
+		cursor = new CursorBar(5, Color.RED);
 		cursor.setPreferredSize(cursor.getPreferredSize());
+		cursorRight = new CursorBar(5, Color.RED);
+		cursorRight.setPreferredSize(cursorRight.getPreferredSize());
 		
 		GridBagConstraints paneC = new GridBagConstraints();
 		GridBagConstraints optionC = new GridBagConstraints();
@@ -41,38 +44,29 @@ public class QuickMenu extends JDesktopPane {
 		paneC.gridx = 1;
 		paneC.anchor = GridBagConstraints.EAST;
 		add(optionsPanel, paneC);
+		//paneC.gridx = 2;
+		//add(cursorRight, paneC);
 		
+		JLabel resume = new JLabel("Resume");
 		JLabel save = new JLabel("Save");
 		JLabel load = new JLabel("Load");
 		JLabel returnMain = new JLabel("Return to Main");
 		JLabel quit = new JLabel("Quit");
 		
+		optionC.weighty = 1;
+		optionC.anchor = GridBagConstraints.WEST;
 		optionC.gridx = 0;
 		optionC.gridy = 0;
-		optionC.anchor = GridBagConstraints.NORTH;
-		optionsPanel.add(save, optionC);
+		optionsPanel.add(resume, optionC);
 		optionC.gridy = 1;
-		optionC.anchor = GridBagConstraints.CENTER;
-		optionsPanel.add(load, optionC);
+		optionsPanel.add(save, optionC);
 		optionC.gridy = 2;
-		optionC.anchor = GridBagConstraints.CENTER;
-		optionsPanel.add(returnMain, optionC);
+		optionsPanel.add(load, optionC);
 		optionC.gridy = 3;
-		optionC.anchor = GridBagConstraints.SOUTH;
+		optionsPanel.add(returnMain, optionC);
+		optionC.gridy = 4;
 		optionsPanel.add(quit, optionC);
 		
-		/*optionsPanel.add(save);
-		optionsPanel.add(load);
-		optionsPanel.add(returnMain);
-		optionsPanel.add(quit);*/
-		
-		save.setBounds(optionsPanel.getX(), optionsPanel.getHeight()/4, save.getWidth(), save.getHeight());
-		load.setBounds((optionsPanel.getX()), (optionsPanel.getHeight()/4) * 2, 
-				load.getWidth(), load.getHeight());
-		returnMain.setBounds((optionsPanel.getX()), (optionsPanel.getHeight()/4) * 3, 
-				returnMain.getWidth(), returnMain.getHeight());
-		quit.setBounds((optionsPanel.getWidth()/4) * 4, (optionsPanel.getHeight()/4) * 4, 
-				quit.getWidth(), quit.getHeight());
 		
 		addKeyListener(new KeyListener() {
 			@Override
@@ -81,10 +75,12 @@ public class QuickMenu extends JDesktopPane {
 			@Override
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode()==KeyEvent.VK_DOWN) {
-					cursor.setCursorPosition(cursor.getPosition() + 2);
+					cursor.setCursorPosition(cursor.getPosition() + 1);
+					cursorRight.setCursorPosition(cursorRight.getPosition() + 1);
 				}
 				if (e.getKeyCode()==KeyEvent.VK_UP) {
-					cursor.setCursorPosition(cursor.getPosition() - 2);
+					cursor.setCursorPosition(cursor.getPosition() - 1);
+					cursorRight.setCursorPosition(cursorRight.getPosition() - 1);
 				}
 			}
 			@Override
@@ -95,6 +91,10 @@ public class QuickMenu extends JDesktopPane {
 	
 	public CursorBar getCursorBar() {
 		return cursor;
+	}
+	
+	public CursorBar getCursorBarRight() {
+		return cursorRight;
 	}
 	
 }

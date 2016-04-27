@@ -26,7 +26,7 @@ public class CursorBar extends JPanel {
 		for (int i = 0; i < scaleH; i++)
 			for (int j = 0; j < scaleW; j++)
 				colors[i][j] = Color.BLACK;
-		numOptions = setNumOptions * 2;
+		numOptions = setNumOptions;
 		cursorPosition = 0;
 		setCursorPosition(cursorPosition);
 	}
@@ -35,13 +35,15 @@ public class CursorBar extends JPanel {
 		if (pos >= numOptions) {
 			setCursorPosition(0);
 		} else if (pos < 0) {
-			setCursorPosition(numOptions - 2);
+			setCursorPosition(numOptions - 1);
 		} else {
-			colors[cursorPosition][0] = Color.BLACK;
-			colors[cursorPosition + 1][0] = Color.BLACK;
+			colors[(300/SQUARE_SIZE)/numOptions*cursorPosition + 2][0] = Color.BLACK;
+			colors[(300/SQUARE_SIZE)/numOptions*cursorPosition + 3][0] = Color.BLACK;
+			colors[(300/SQUARE_SIZE)/numOptions*cursorPosition + 4][0] = Color.BLACK;
 			cursorPosition = pos;
-			colors[pos][0] = cursorColor;
-			colors[pos + 1][0] = cursorColor;
+			colors[(300/SQUARE_SIZE)/numOptions*cursorPosition + 2][0] = cursorColor;
+			colors[(300/SQUARE_SIZE)/numOptions*cursorPosition + 3][0] = cursorColor;
+			colors[(300/SQUARE_SIZE)/numOptions*cursorPosition + 4][0] = cursorColor;
 			this.repaint();
 		}
 	}
