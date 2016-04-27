@@ -31,6 +31,7 @@ public class GUI4 {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(1100, 650);
 		frame.setMinimumSize(new Dimension(1100, 650));
+		frame.setResizable(false);
 		
 		mainMenu = new JDesktopPane();
 		mainMenu.setLayout(new GridBagLayout());
@@ -240,11 +241,12 @@ public class GUI4 {
 						frame.setContentPane(loadScreen);
 						break;
 					case 3:
-						if (JOptionPane.showOptionDialog(null, "Are you sure you want to return to the main"
+						if (JOptionPane.showOptionDialog(frame, "Are you sure you want to return to the main"
 								+ " menu?\nAny unsaved progress will be lost!", null, 
 								JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null) 
 								== JOptionPane.YES_OPTION) {
 							frame.setContentPane(mainMenu);
+							quickMenu.getCursorBar().setCursorPosition(0);
 						}
 						break;
 					case 4:
