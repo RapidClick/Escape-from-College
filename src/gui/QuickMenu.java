@@ -3,6 +3,8 @@ package gui;
 import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import javax.swing.JDesktopPane;
 import javax.swing.JLabel;
@@ -20,8 +22,8 @@ public class QuickMenu extends JDesktopPane {
 		
 		setBackground(Color.LIGHT_GRAY);
 		
-		cursor = new CursorBar(5, Color.RED, 5);
-		cursor.setCursorPosition(2);
+		cursor = new CursorBar(4, Color.RED);
+		cursor.setPreferredSize(cursor.getPreferredSize());
 		
 		GridBagConstraints paneC = new GridBagConstraints();
 		GridBagConstraints optionC = new GridBagConstraints();
@@ -47,13 +49,48 @@ public class QuickMenu extends JDesktopPane {
 		
 		optionC.gridx = 0;
 		optionC.gridy = 0;
+		optionC.anchor = GridBagConstraints.NORTH;
 		optionsPanel.add(save, optionC);
 		optionC.gridy = 1;
+		optionC.anchor = GridBagConstraints.CENTER;
 		optionsPanel.add(load, optionC);
 		optionC.gridy = 2;
+		optionC.anchor = GridBagConstraints.CENTER;
 		optionsPanel.add(returnMain, optionC);
 		optionC.gridy = 3;
+		optionC.anchor = GridBagConstraints.SOUTH;
 		optionsPanel.add(quit, optionC);
+		
+		/*optionsPanel.add(save);
+		optionsPanel.add(load);
+		optionsPanel.add(returnMain);
+		optionsPanel.add(quit);*/
+		
+		save.setBounds(optionsPanel.getX(), optionsPanel.getHeight()/4, save.getWidth(), save.getHeight());
+		load.setBounds((optionsPanel.getX()), (optionsPanel.getHeight()/4) * 2, 
+				load.getWidth(), load.getHeight());
+		returnMain.setBounds((optionsPanel.getX()), (optionsPanel.getHeight()/4) * 3, 
+				returnMain.getWidth(), returnMain.getHeight());
+		quit.setBounds((optionsPanel.getWidth()/4) * 4, (optionsPanel.getHeight()/4) * 4, 
+				quit.getWidth(), quit.getHeight());
+		
+		addKeyListener(new KeyListener() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+			}
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode()==KeyEvent.VK_DOWN) {
+					cursor.setCursorPosition(cursor.getPosition() + 2);
+				}
+				if (e.getKeyCode()==KeyEvent.VK_UP) {
+					cursor.setCursorPosition(cursor.getPosition() - 2);
+				}
+			}
+			@Override
+			public void keyReleased(KeyEvent e) {
+			}
+		});
 	}
 	
 	public CursorBar getCursorBar() {
