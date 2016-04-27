@@ -6,12 +6,12 @@ import javax.swing.*;
 
 public class StatBar extends JPanel {
 	
-	private static final long serialVersionUID = 0L;
+	//private static final long serialVersionUID = 0L;
 	private int fullLength = 10; //10 by default
 	private int currentStatLvl;					//to make slivers smaller - multiply setHealth by some
-	private static final int MARGIN = 0;		//num and divide SquareSize in width by the same
-	private static final int SQUARE_SIZE = 18;  // pixel size of each square
-	private static int WIDTH = SQUARE_SIZE;
+	private final int MARGIN = 0;				//num and divide SquareSize in width by the same
+	private final int SQUARE_SIZE = 18;  // pixel size of each square
+	private int WIDTH = SQUARE_SIZE;
 	private Color[][] colors;
 	private int scaleH;
 	private int scaleW;
@@ -24,7 +24,7 @@ public class StatBar extends JPanel {
 	public StatBar(Color barColorIn) {
 		barColor = barColorIn;
 		scaleH = 1;
-		scaleW = 1 * fullLength;
+		scaleW = fullLength;
 		currentStatLvl = fullLength;
 		int overallSizeH = scaleH + 2 * MARGIN;
 		int overallSizeW = scaleW + 2 * MARGIN;

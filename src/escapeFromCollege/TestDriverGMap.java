@@ -1,9 +1,6 @@
 package escapeFromCollege;
-import gui.GUI;
-import gui.GUI3;
 import gui.GUI4;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 
 public class TestDriverGMap {

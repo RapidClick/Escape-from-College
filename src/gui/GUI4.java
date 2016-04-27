@@ -12,7 +12,7 @@ public class GUI4 {
 	private JFrame frame;
 	private JDesktopPane mainMenu;
 	private PlayPane playPane;
-	private JDesktopPane quickMenu;
+	private QuickMenu quickMenu;
 	private MemoryScreen saveScreen;
 	private MemoryScreen loadScreen;
 	private MemoryScreen deleteScreen;
@@ -31,12 +31,16 @@ public class GUI4 {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(1100, 650);
 		frame.setMinimumSize(new Dimension(1100, 650));
+		frame.setResizable(false);
 		
 		mainMenu = new JDesktopPane();
 		mainMenu.setLayout(new GridBagLayout());
 		frame.add(mainMenu);
 		playPane = new PlayPane();
 		frame.add(playPane);
+		
+		quickMenu = new QuickMenu();
+		frame.add(quickMenu);
 		
 		saveScreen = new MemoryScreen("Save");
 		frame.add(saveScreen);
@@ -178,30 +182,82 @@ public class GUI4 {
 		
 		
 		
-		playPane.addKeyListener(new KeyListener() {
+		playPane.addKeyListener(new QuickMenuListener());
+		playPane.getWriteText().addKeyListener(new QuickMenuListener());
+		quickMenu.addKeyListener(new QuickMenuListener());
+		quickMenu.addKeyListener(new KeyListener() {
 			@Override
-			public void keyTyped(KeyEvent e) {	
+			public void keyTyped(KeyEvent e) {
 			}
 			@Override
 			public void keyPressed(KeyEvent e) {
-				if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-					GridBagConstraints doneButtonC = new GridBagConstraints();
-					doneButtonC.gridy = 5;
-					doneButtonC.weightx = 1;
-					doneButtonC.anchor = GridBagConstraints.LAST_LINE_END;
-					JButton cancel = new JButton("Cancel");
-					saveScreen.add(cancel, doneButtonC);
-					cancel.addActionListener(new ActionListener() {
-						@Override
-						public void actionPerformed(ActionEvent e) {
-							frame.setContentPane(playPane);
-							playPane.requestFocus();
-							saveScreen.remove(cancel);
+				if (e.getKeyCode()==KeyEvent.VK_ENTER) {
+					switch (quickMenu.getCursorBar().getPosition()) {
+					case 0:
+						frame.setContentPane(playPane);
+						playPane.getWriteText().requestFocus();
+						break;
+					case 1:
+						GridBagConstraints doneButtonC = new GridBagConstraints();
+						doneButtonC.gridy = 5;
+						doneButtonC.weightx = 1;
+						doneButtonC.anchor = GridBagConstraints.LAST_LINE_END;
+						JButton cancel = new JButton("Cancel");
+						saveScreen.add(cancel, doneButtonC);
+						cancel.addActionListener(new ActionListener() {
+							@Override
+							public void actionPerformed(ActionEvent e) {
+								frame.setContentPane(playPane);
+								//frame.setContentPane(quickMenu);
+								//quickMenu.requestFocus();
+								playPane.getWriteText().requestFocus();
+								saveScreen.remove(cancel);
+							}
+						});
+						saveScreen.setBounds(frame.getWidth()/4, frame.getHeight()/4,
+								frame.getWidth()/2, frame.getHeight()/2);
+						frame.setContentPane(saveScreen);
+						break;
+					case 2:
+						checkForFiles(loadScreen);
+						doneButtonC = new GridBagConstraints();
+						doneButtonC.gridy = 5;
+						doneButtonC.weightx = 1;
+						doneButtonC.anchor = GridBagConstraints.LAST_LINE_END;
+						cancel = new JButton("Cancel");
+						loadScreen.add(cancel, doneButtonC);
+						cancel.addActionListener(new ActionListener() {
+							@Override
+							public void actionPerformed(ActionEvent e) {
+								frame.setContentPane(playPane);
+								playPane.getWriteText().requestFocus();
+								//frame.setContentPane(quickMenu);
+								//quickMenu.requestFocus();
+								loadScreen.remove(cancel);
+							}
+						});
+						loadScreen.setBounds(frame.getWidth()/4, frame.getHeight()/4,
+								frame.getWidth()/2, frame.getHeight()/2);
+						frame.setContentPane(loadScreen);
+						break;
+					case 3:
+						if (JOptionPane.showOptionDialog(frame, "Are you sure you want to return to the main"
+								+ " menu?\nAny unsaved progress will be lost!", null, 
+								JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null) 
+								== JOptionPane.YES_OPTION) {
+							frame.setContentPane(mainMenu);
+							quickMenu.getCursorBar().setCursorPosition(0);
 						}
-					});
-					saveScreen.setBounds(frame.getWidth()/4, frame.getHeight()/4,
-							frame.getWidth()/2, frame.getHeight()/2);
-					frame.setContentPane(saveScreen);
+						break;
+					case 4:
+						if (JOptionPane.showOptionDialog(null, "Are you sure you want to quit?\n"
+								+ "Any unsaved progress will be lost!", null, 
+								JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null) 
+								== JOptionPane.YES_OPTION) {
+							System.exit(0);
+						}
+						break;
+					}
 				}
 			}
 			@Override
@@ -254,14 +310,14 @@ public class GUI4 {
 	}
 	
 	public void startGame() {
-		playPane.setBounds(0, 0, frame.getWidth(), frame.getHeight());
+		playPane.setBounds(0, 0, frame.getWidth(), 628);
 		frame.setContentPane(playPane);
 		playPane.requestFocus();
 	}
 	
 	public void startGame(File toStartFrom) {
 		//TODO load the game
-		playPane.setBounds(0, 0, frame.getWidth(), frame.getHeight());
+		playPane.setBounds(0, 0, frame.getWidth(), 628);
 		frame.setContentPane(playPane);
 		playPane.requestFocus();
 	}
@@ -326,6 +382,26 @@ public class GUI4 {
 			}
 			//TODO save the game to this slot
 			//TODO check for need of overwrite warning necessity
+		}
+	}
+	
+	private class QuickMenuListener implements KeyListener {
+		public void keyTyped(KeyEvent e) {
+		}
+		public void keyPressed(KeyEvent e) {
+			if (e.getKeyCode()==KeyEvent.VK_ESCAPE) {
+				if (frame.getContentPane().equals(quickMenu)) {
+					frame.setContentPane(playPane);
+					playPane.getWriteText().requestFocus();
+				} else {
+					quickMenu.setBounds(frame.getWidth()/5, frame.getHeight()/5, quickMenu.getWidth(),
+							quickMenu.getHeight());
+					frame.setContentPane(quickMenu);
+					quickMenu.requestFocus();
+				}
+			}
+		}
+		public void keyReleased(KeyEvent e) {
 		}
 	}
 	

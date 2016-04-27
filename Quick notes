@@ -1,18 +1,8 @@
 
 current issues:
 
-	reverting to and resetting main menu to reflect changes after the main menu has set the content
-	pane of the frame to something of another class
-	
-	possible fixes:
+	things to checkout
 	-ancestor listeners
-		(overriding the add and remove methods of all the custom classes and setting them so all they change is
-			visibility?)
-	-creating all objects outside of GUI class but giving each thing a method to retrieve those objects, then
-		adding listeners in GUI class only
-	-giving each object the object above it as a parameter so that it can modify upwards as needed
-	-static variables, instances, and objects
-	
 	
 	
 	resize of window bug
