@@ -12,7 +12,7 @@ public class GUI4 {
 	private JFrame frame;
 	private JDesktopPane mainMenu;
 	private PlayPane playPane;
-	private JDesktopPane quickMenu;
+	private QuickMenu quickMenu;
 	private MemoryScreen saveScreen;
 	private MemoryScreen loadScreen;
 	private MemoryScreen deleteScreen;
@@ -37,6 +37,9 @@ public class GUI4 {
 		frame.add(mainMenu);
 		playPane = new PlayPane();
 		frame.add(playPane);
+		
+		quickMenu = new QuickMenu();
+		frame.add(quickMenu);
 		
 		saveScreen = new MemoryScreen("Save");
 		frame.add(saveScreen);
@@ -178,36 +181,9 @@ public class GUI4 {
 		
 		
 		
-		playPane.addKeyListener(new KeyListener() {
-			@Override
-			public void keyTyped(KeyEvent e) {	
-			}
-			@Override
-			public void keyPressed(KeyEvent e) {
-				if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-					GridBagConstraints doneButtonC = new GridBagConstraints();
-					doneButtonC.gridy = 5;
-					doneButtonC.weightx = 1;
-					doneButtonC.anchor = GridBagConstraints.LAST_LINE_END;
-					JButton cancel = new JButton("Cancel");
-					saveScreen.add(cancel, doneButtonC);
-					cancel.addActionListener(new ActionListener() {
-						@Override
-						public void actionPerformed(ActionEvent e) {
-							frame.setContentPane(playPane);
-							playPane.requestFocus();
-							saveScreen.remove(cancel);
-						}
-					});
-					saveScreen.setBounds(frame.getWidth()/4, frame.getHeight()/4,
-							frame.getWidth()/2, frame.getHeight()/2);
-					frame.setContentPane(saveScreen);
-				}
-			}
-			@Override
-			public void keyReleased(KeyEvent e) {
-			}
-		});
+		playPane.addKeyListener(new QuickMenuListener());
+		playPane.getWriteText().addKeyListener(new QuickMenuListener());
+		quickMenu.addKeyListener(new QuickMenuListener());
 		
 		
 		
@@ -326,6 +302,27 @@ public class GUI4 {
 			}
 			//TODO save the game to this slot
 			//TODO check for need of overwrite warning necessity
+		}
+	}
+	
+	private class QuickMenuListener implements KeyListener {
+		public void keyTyped(KeyEvent e) {
+			
+		}
+		public void keyPressed(KeyEvent e) {
+			if (e.getKeyCode()==KeyEvent.VK_ESCAPE) {
+				if (frame.getContentPane().equals(quickMenu)) {
+					frame.setContentPane(playPane);
+					playPane.getWriteText().requestFocus();
+				} else {
+					quickMenu.setBounds(frame.getWidth()/5, frame.getHeight()/5, 150, 350);
+					frame.setContentPane(quickMenu);
+					quickMenu.requestFocus();
+				}
+			}
+		}
+		public void keyReleased(KeyEvent e) {
+			
 		}
 	}
 	
