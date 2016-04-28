@@ -1,6 +1,8 @@
 package gui;
 
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import javax.swing.*;
 
@@ -104,7 +106,24 @@ public class PlayPane extends JDesktopPane {
 		playPaneC.weighty = 0;
 		add(enterPanel, playPaneC);
 		
-		
+		writeText.addKeyListener(new KeyListener() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+			}
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode()==KeyEvent.VK_ENTER) {
+					scrollText.append("\n\n> " + writeText.getText());
+					writeText.setText("");
+				}
+			}
+			@Override
+			public void keyReleased(KeyEvent e) {
+				if (e.getKeyCode()==KeyEvent.VK_ENTER) {
+					writeText.setText("");
+				}
+			}
+		});
 		
 	}
 	
@@ -114,6 +133,10 @@ public class PlayPane extends JDesktopPane {
 	
 	public String getWriteTextString() {
 		return writeText.getText();
+	}
+	
+	public JTextArea getScrollText() {
+		return scrollText;
 	}
 
 }

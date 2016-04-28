@@ -185,85 +185,6 @@ public class GUI4 {
 		playPane.addKeyListener(new QuickMenuListener());
 		playPane.getWriteText().addKeyListener(new QuickMenuListener());
 		quickMenu.addKeyListener(new QuickMenuListener());
-		quickMenu.addKeyListener(new KeyListener() {
-			@Override
-			public void keyTyped(KeyEvent e) {
-			}
-			@Override
-			public void keyPressed(KeyEvent e) {
-				if (e.getKeyCode()==KeyEvent.VK_ENTER) {
-					switch (quickMenu.getCursorBar().getPosition()) {
-					case 0:
-						frame.setContentPane(playPane);
-						playPane.getWriteText().requestFocus();
-						break;
-					case 1:
-						GridBagConstraints doneButtonC = new GridBagConstraints();
-						doneButtonC.gridy = 5;
-						doneButtonC.weightx = 1;
-						doneButtonC.anchor = GridBagConstraints.LAST_LINE_END;
-						JButton cancel = new JButton("Cancel");
-						saveScreen.add(cancel, doneButtonC);
-						cancel.addActionListener(new ActionListener() {
-							@Override
-							public void actionPerformed(ActionEvent e) {
-								frame.setContentPane(playPane);
-								//frame.setContentPane(quickMenu);
-								//quickMenu.requestFocus();
-								playPane.getWriteText().requestFocus();
-								saveScreen.remove(cancel);
-							}
-						});
-						saveScreen.setBounds(frame.getWidth()/4, frame.getHeight()/4,
-								frame.getWidth()/2, frame.getHeight()/2);
-						frame.setContentPane(saveScreen);
-						break;
-					case 2:
-						checkForFiles(loadScreen);
-						doneButtonC = new GridBagConstraints();
-						doneButtonC.gridy = 5;
-						doneButtonC.weightx = 1;
-						doneButtonC.anchor = GridBagConstraints.LAST_LINE_END;
-						cancel = new JButton("Cancel");
-						loadScreen.add(cancel, doneButtonC);
-						cancel.addActionListener(new ActionListener() {
-							@Override
-							public void actionPerformed(ActionEvent e) {
-								frame.setContentPane(playPane);
-								playPane.getWriteText().requestFocus();
-								//frame.setContentPane(quickMenu);
-								//quickMenu.requestFocus();
-								loadScreen.remove(cancel);
-							}
-						});
-						loadScreen.setBounds(frame.getWidth()/4, frame.getHeight()/4,
-								frame.getWidth()/2, frame.getHeight()/2);
-						frame.setContentPane(loadScreen);
-						break;
-					case 3:
-						if (JOptionPane.showOptionDialog(frame, "Are you sure you want to return to the main"
-								+ " menu?\nAny unsaved progress will be lost!", null, 
-								JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null) 
-								== JOptionPane.YES_OPTION) {
-							frame.setContentPane(mainMenu);
-							quickMenu.getCursorBar().setCursorPosition(0);
-						}
-						break;
-					case 4:
-						if (JOptionPane.showOptionDialog(null, "Are you sure you want to quit?\n"
-								+ "Any unsaved progress will be lost!", null, 
-								JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null) 
-								== JOptionPane.YES_OPTION) {
-							System.exit(0);
-						}
-						break;
-					}
-				}
-			}
-			@Override
-			public void keyReleased(KeyEvent e) {
-			}
-		});
 		
 		
 		
@@ -311,6 +232,8 @@ public class GUI4 {
 	
 	public void startGame() {
 		playPane.setBounds(0, 0, frame.getWidth(), 628);
+		playPane.getWriteText().setText("");
+		playPane.getScrollText().setText("");
 		frame.setContentPane(playPane);
 		playPane.requestFocus();
 	}
@@ -318,6 +241,8 @@ public class GUI4 {
 	public void startGame(File toStartFrom) {
 		//TODO load the game
 		playPane.setBounds(0, 0, frame.getWidth(), 628);
+		playPane.getWriteText().setText("");
+		playPane.getScrollText().setText("");
 		frame.setContentPane(playPane);
 		playPane.requestFocus();
 	}
@@ -398,6 +323,76 @@ public class GUI4 {
 							quickMenu.getHeight());
 					frame.setContentPane(quickMenu);
 					quickMenu.requestFocus();
+				}
+			}
+			if (e.getKeyCode()==KeyEvent.VK_ENTER) {
+				switch (quickMenu.getCursorBar().getPosition()) {
+				case 0:
+					frame.setContentPane(playPane);
+					playPane.getWriteText().requestFocus();
+					break;
+				case 1:
+					GridBagConstraints doneButtonC = new GridBagConstraints();
+					doneButtonC.gridy = 5;
+					doneButtonC.weightx = 1;
+					doneButtonC.anchor = GridBagConstraints.LAST_LINE_END;
+					JButton cancel = new JButton("Cancel");
+					saveScreen.add(cancel, doneButtonC);
+					cancel.addActionListener(new ActionListener() {
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							frame.setContentPane(playPane);
+							//frame.setContentPane(quickMenu);
+							//quickMenu.requestFocus();
+							playPane.getWriteText().requestFocus();
+							saveScreen.remove(cancel);
+						}
+					});
+					saveScreen.setBounds(frame.getWidth()/4, frame.getHeight()/4,
+							frame.getWidth()/2, frame.getHeight()/2);
+					frame.setContentPane(saveScreen);
+					break;
+				case 2:
+					checkForFiles(loadScreen);
+					doneButtonC = new GridBagConstraints();
+					doneButtonC.gridy = 5;
+					doneButtonC.weightx = 1;
+					doneButtonC.anchor = GridBagConstraints.LAST_LINE_END;
+					cancel = new JButton("Cancel");
+					loadScreen.add(cancel, doneButtonC);
+					cancel.addActionListener(new ActionListener() {
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							frame.setContentPane(playPane);
+							playPane.getWriteText().requestFocus();
+							//frame.setContentPane(quickMenu);
+							//quickMenu.requestFocus();
+							loadScreen.remove(cancel);
+						}
+					});
+					loadScreen.setBounds(frame.getWidth()/4, frame.getHeight()/4,
+							frame.getWidth()/2, frame.getHeight()/2);
+					frame.setContentPane(loadScreen);
+					break;
+				case 3:
+					if (JOptionPane.showOptionDialog(frame, "Are you sure you want to return to the main"
+							+ " menu?\nAny unsaved progress will be lost!", null, 
+							JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null) 
+							== JOptionPane.YES_OPTION) {
+						frame.setContentPane(mainMenu);
+						frame.revalidate();
+						frame.repaint();
+						quickMenu.getCursorBar().setCursorPosition(0);
+					}
+					break;
+				case 4:
+					if (JOptionPane.showOptionDialog(null, "Are you sure you want to quit?\n"
+							+ "Any unsaved progress will be lost!", null, 
+							JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null) 
+							== JOptionPane.YES_OPTION) {
+						System.exit(0);
+					}
+					break;
 				}
 			}
 		}
