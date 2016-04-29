@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
 import java.util.Scanner;
+import java.lang.String;
 
 import javax.swing.*;
 
@@ -165,17 +166,17 @@ public class GUI4 {
 		});
 		
 		
-		for (int i = 1; i < loadScreen.getNumButtons(); i++) {
+		for (int i = 1; i <= loadScreen.getNumButtons(); i++) {
 			loadScreen.getButtonAt(i).addActionListener(
 					new LoadButtonListener(loadScreen.getButtonAt(i).getFile()));
 		}
 		
-		for (int i = 1; i < deleteScreen.getNumButtons(); i++) {
+		for (int i = 1; i <= deleteScreen.getNumButtons(); i++) {
 			deleteScreen.getButtonAt(i).addActionListener(
 					new DeleteButtonListener(deleteScreen.getButtonAt(i).getFile(), i));
 		}
 		
-		for (int i = 1; i < saveScreen.getNumButtons(); i++) {
+		for (int i = 1; i <= saveScreen.getNumButtons(); i++) {
 			saveScreen.getButtonAt(i).addActionListener(
 					new SaveButtonListener(saveScreen.getButtonAt(i).getFile()));
 		}
@@ -234,7 +235,9 @@ public class GUI4 {
 		playPane.setBounds(0, 0, frame.getWidth(), 628);
 		playPane.getWriteText().setText("");
 		playPane.getScrollText().setText("");
+		quickMenu.getCursorBar().setCursorPosition(0);
 		frame.setContentPane(playPane);
+		playPane.setVisible(true);
 		playPane.requestFocus();
 	}
 	
@@ -243,7 +246,9 @@ public class GUI4 {
 		playPane.setBounds(0, 0, frame.getWidth(), 628);
 		playPane.getWriteText().setText("");
 		playPane.getScrollText().setText("");
+		quickMenu.getCursorBar().setCursorPosition(0);
 		frame.setContentPane(playPane);
+		playPane.setVisible(true);
 		playPane.requestFocus();
 	}
 	
@@ -300,13 +305,23 @@ public class GUI4 {
 		}
 		public void actionPerformed(ActionEvent e) {
 			try {
+				Scanner fileReader = new Scanner(thisFile);
+				if (fileReader.hasNextLine()) {
+					if (JOptionPane.showConfirmDialog(frame, "Saving to this save slot will overwrite "
+							+ "its current data.\nWould you like to overwrite this save?", null,
+							JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {
+					}
+				}
+				fileReader.close();
+				//TODO save the data
+			} catch (FileNotFoundException e2) {
+				e2.printStackTrace();
+			}
+			try {
 				setLastUsedFile(thisFile.toString());
 			} catch (FileNotFoundException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-			//TODO save the game to this slot
-			//TODO check for need of overwrite warning necessity
 		}
 	}
 	
@@ -380,9 +395,14 @@ public class GUI4 {
 							JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null) 
 							== JOptionPane.YES_OPTION) {
 						frame.setContentPane(mainMenu);
+						playPane.validate();
+						playPane.revalidate();
+						mainMenu.validate();
+						mainMenu.revalidate();
+						frame.validate();
 						frame.revalidate();
-						frame.repaint();
-						quickMenu.getCursorBar().setCursorPosition(0);
+						mainMenu.setVisible(true);
+						frame.setVisible(true);
 					}
 					break;
 				case 4:

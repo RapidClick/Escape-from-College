@@ -3,6 +3,7 @@ package gui;
 import javax.swing.JButton;
 import java.io.*;
 import java.util.Scanner;
+import java.lang.String;
 
 public class MemorySlotButton extends JButton {
 	
