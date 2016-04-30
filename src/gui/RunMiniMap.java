@@ -37,11 +37,11 @@ public class RunMiniMap {
 		posX = mini.getMapSize()/2;
 		posY = mini.getMapSize()/2;
 		
-		/*for (int row = 60; row < 70; row++) {
+		for (int row = 60; row < 70; row++) {
 			for (int col = 60; col < 90; col++) {
 				mini.setColor(row, col, Color.GRAY);
 			}
-		}*/
+		}
 		
 		setCursor(0,0);
 		
@@ -49,28 +49,28 @@ public class RunMiniMap {
 			@Override
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_UP) {
-					if (posX == 0) {
+					if (posX == 0 || posY >= 59 && posY <= 89 && posX == 70) {
 					} else {
 						setCursor(-1,0);
 						posX-=1;
 					}
 				}
 				if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-					if (posX == 98) {
+					if (posX == 98 || posY >= 59 && posY <= 89 && posX == 58) {
 					} else {
 						setCursor(1,0);
 						posX+=1;
 					}
 				}
 				if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-					if (posY == 98) {
+					if (posY == 98 || posX <= 69 && posX >= 59 && posY == 58) {
 					} else {
 						setCursor(0,1);
 						posY+=1;
 					}
 				}
 				if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-					if (posY == 0) {
+					if (posY == 0 || posX >= 59 && posX <= 69 && posY == 90) {
 					} else {
 						setCursor(0,-1);
 						posY-=1;
@@ -87,10 +87,7 @@ public class RunMiniMap {
 			@Override
 			public void keyReleased(KeyEvent e) {
 				// TODO Auto-generated method stub
-				if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-					System.out.println(posY);
-				}
-				
+					System.out.println(posY + ", " + posX);
 			}
 		});
 		
