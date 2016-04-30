@@ -37,11 +37,11 @@ public class RunMiniMap {
 		posX = mini.getMapSize()/2;
 		posY = mini.getMapSize()/2;
 		
-		for (int row = 60; row < 70; row++) {
+		/*for (int row = 60; row < 70; row++) {
 			for (int col = 60; col < 90; col++) {
 				mini.setColor(row, col, Color.GRAY);
 			}
-		}
+		}*/
 		
 		setCursor(0,0);
 		
