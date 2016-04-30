@@ -390,10 +390,10 @@ public class GUI4 {
 					frame.setContentPane(loadScreen);
 					break;
 				case 3:
-					if (JOptionPane.showOptionDialog(frame, "Are you sure you want to return to the main"
-							+ " menu?\nAny unsaved progress will be lost!", null, 
-							JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null) 
-							== JOptionPane.YES_OPTION) {
+					//if (JOptionPane.showOptionDialog(frame, "Are you sure you want to return to the main"
+						//	+ " menu?\nAny unsaved progress will be lost!", null, 
+							//JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null) 
+							//== JOptionPane.YES_OPTION) {
 						frame.setContentPane(mainMenu);
 						playPane.validate();
 						playPane.revalidate();
@@ -403,7 +403,7 @@ public class GUI4 {
 						frame.revalidate();
 						mainMenu.setVisible(true);
 						frame.setVisible(true);
-					}
+					//}
 					break;
 				case 4:
 					if (JOptionPane.showOptionDialog(null, "Are you sure you want to quit?\n"
