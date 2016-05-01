@@ -15,6 +15,7 @@ public class PlayPane extends JDesktopPane {
 	private JPanel invtPanel;
 	private JPanel enterPanel;
 	private StatBox healthBox;
+	private MiniMap mini = new MiniMap(100);
 	
 	public PlayPane() {
 		super();
@@ -100,7 +101,9 @@ public class PlayPane extends JDesktopPane {
 		playPaneC.gridx = 2;
 		playPaneC.gridy = 0;
 		playPaneC.weighty = 1;
-		add(invtPanel, playPaneC);
+		playPaneC.weightx = 1;
+		playPaneC.fill = GridBagConstraints.BOTH;
+		add(mini, playPaneC);
 		
 		playPaneC.gridy = 1;
 		playPaneC.weighty = 0;
@@ -114,6 +117,38 @@ public class PlayPane extends JDesktopPane {
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode()==KeyEvent.VK_ENTER) {
 					scrollText.append("\n\n> " + writeText.getText());
+					if (writeText.getText().equalsIgnoreCase("up")) {
+						if (mini.getPosX() == 0 || mini.getPosY() >= 59 && mini.getPosY() <= 89 &&
+								mini.getPosX() == 70) {
+						} else {
+							mini.setCursor(-1,0);
+							mini.setPosX(-1);
+						}
+					}
+					if (writeText.getText().equalsIgnoreCase("down")) {
+						if (mini.getPosX() == 98 || mini.getPosY() >= 59 && mini.getPosY() <= 89 &&
+								mini.getPosX() == 58) {
+						} else {
+							mini.setCursor(1,0);
+							mini.setPosX(1);
+						}
+					}
+					if (writeText.getText().equalsIgnoreCase("right")) {
+						if (mini.getPosY() == 98 || mini.getPosX() <= 69 && mini.getPosX() >= 59 && 
+								mini.getPosY() == 58) {
+						} else {
+							mini.setCursor(0,1);
+							mini.setPosY(1);
+						}
+					}
+					if (writeText.getText().equalsIgnoreCase("left")) {
+						if (mini.getPosY() == 0 || mini.getPosX() >= 59 && mini.getPosX() <= 69 && 
+								mini.getPosY() == 90) {
+						} else {
+							mini.setCursor(0,-1);
+							mini.setPosY(-1);
+						}
+					}
 					writeText.setText("");
 				}
 			}
@@ -137,6 +172,10 @@ public class PlayPane extends JDesktopPane {
 	
 	public JTextArea getScrollText() {
 		return scrollText;
+	}
+	
+	public MiniMap getMiniMap() {
+		return mini;
 	}
 
 }

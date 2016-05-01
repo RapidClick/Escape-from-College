@@ -236,6 +236,7 @@ public class GUI4 {
 		playPane.getWriteText().setText("");
 		playPane.getScrollText().setText("");
 		quickMenu.getCursorBar().setCursorPosition(0);
+		playPane.getMiniMap().resetCursor();
 		frame.setContentPane(playPane);
 		playPane.setVisible(true);
 		playPane.requestFocus();
